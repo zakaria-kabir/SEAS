@@ -13,7 +13,7 @@ class School_T(models.Model):
 
 class Department_T(models.Model):
     DeptID = models.CharField(max_length=6, primary_key=True)
-    DeptName = models.CharField(max_length=50, null= True)
+    DeptName = models.CharField(max_length=50, null=True)
     SchoolTitle = models.ForeignKey(School_T, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -23,7 +23,8 @@ class Department_T(models.Model):
 class Faculty_T(models.Model):
     FacultyID = models.IntegerField(primary_key=True)
     FacultyName = models.CharField(max_length=30)
-    DeptID = models.ForeignKey(Department_T, on_delete=models.CASCADE)
+    DeptID = models.ForeignKey(
+        Department_T, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.FacultyID
@@ -33,7 +34,8 @@ class Course_T(models.Model):
     CourseID = models.CharField(max_length=7, primary_key=True)
     CourseName = models.CharField(max_length=30)
     CreditHour = models.IntegerField()
-    DeptID = models.ForeignKey(Department_T, on_delete=models.CASCADE)
+    DeptID = models.ForeignKey(
+        Department_T, null=True, on_delete=models.CASCADE)
     CoOfferdCourse = models.CharField(max_length=7, null=True)
 
     def __str__(self):
