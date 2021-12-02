@@ -10,7 +10,7 @@ from seasapp.models import *
 def populatedata(sem, year):
     # Reading data from excel
     filename = 'Tally Sheet For '+sem+' '+year+'.xlsx'
-    df = pd.read_excel('Tally Sheet For Autumn 2020.xlsx', skiprows=3)
+    df = pd.read_excel(filename, skiprows=3)
 
     #Room_T
     df = df.drop_duplicates(subset=["ROOM_ID"])
