@@ -1,5 +1,4 @@
 import django
-from numpy.lib.function_base import select
 import pandas as pd
 import os
 
