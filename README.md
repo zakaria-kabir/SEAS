@@ -3,8 +3,8 @@
  ### Steps to start working:
  1. create a user 
         name "seas",
-        host name: local
-        password: seas
+        host name: local,
+        password: seas,
         mark all checkbox
         -> go
  2. Create a Database
