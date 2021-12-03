@@ -21,8 +21,6 @@ for i in data[0:16]:
         ''')
         dept = Department_T(DeptID=i[15], SchoolTitle=schooltitlefk[0])
         dept.save()
-
-
 #Course_T
     df = df.drop_duplicates(subset=["CourseID"])
     data = df.values.tolist()
@@ -33,7 +31,6 @@ for i in data[0:16]:
 
 #CO_OFFERED_COURSE_T ,  CoOfferedCourseID 
             coList=i[2].split(",")
-            
             for j in coList:
                 print(j)
                 coCourse=CO_OFFERED_COURSE_T(CourseID=i[1],CoOfferedCourseID=j)
