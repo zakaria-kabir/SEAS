@@ -1,6 +1,7 @@
 import django
 import pandas as pd
 import os
+from string import digits
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seas.settings")
 
@@ -12,19 +13,21 @@ def populatedata(sem, year):
     filename = 'Tally Sheet For '+sem+' '+year+'.xlsx'
     df = pd.read_excel(filename, skiprows=3)
 
-    #Room_T
-    df = df.drop_duplicates(subset=["ROOM_ID"])
-    data = df.values.tolist()
+
+#Room_T
+    #df = df.drop_duplicates(subset=["ROOM_ID"])
+    dfroom = df[["ROOM_ID", "ROOM_CAPACITY"]]
+    data = dfroom.values.tolist()
     for i in data[0:]:
-        if pd.isna(i[7])==False:
-            room = Room_T(RoomID=i[7], RoomCapacity=i[8])
+        if pd.isna(i[0])==False:
+            room = Room_T(RoomID=i[0], RoomCapacity=i[1])
             room.save()
 
-    #School_T
+
+#School_T
     #df = df.drop_duplicates(subset=["SCHOOL_TITLE"])
     #data = df.values.tolist()
-    school1 = School_T(
-    SchoolTitle="SETS", SchoolName="School of Engineering, Technology & Sciences")
+    school1 = School_T(SchoolTitle="SETS", SchoolName="School of Engineering, Technology & Sciences")
     school2 = School_T(SchoolTitle="SLASS", SchoolName="School of Liberal Arts & Social Sciences")
     school3 = School_T(SchoolTitle="SBE", SchoolName="School of Business")
     school4 = School_T(SchoolTitle="SPPH", SchoolName="School of Pharmacy and Public Health")
@@ -35,30 +38,39 @@ def populatedata(sem, year):
     school4.save()
     school5.save()
 
-    #Department_T
-    #None
+
+#Department_T
+    #datascriptRevenue
 
 
-    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-    # print(data)
-    for i in data[0:]: 
-        facultyID,facultyName = i[11].split("-")
-        if pd.isna(facultyID) and pd.isna(facultyName):
-            continue
-        print(facultyID,facultyName)
-
-
-#Section_T
-    df = df.drop_duplicates(subset=["SECTION"])
-    data = df.values.tolist()
+#Faculty_T
+    dffaculty = df["FACULTY_FULL_NAME"]
+    data = dffaculty.values.tolist()
     for i in data[0:]:
-        if pd.isna(i[3])==False:
-            for i in data[0:]: courseidfk = Course_T.objects.get
-            facultyidfk = Faculty_T.objects.get
-            section = Section_T(SectionNum=i[3],Year=year,Semester=sem,CourseID=courseidfk,FacultyID=facultyidfk,SectionCapacity=i[5],SectionEnrolled=i[6],StartTime=i[12],
-            EndTime=i[13], Day=[14], Blocked=i[9])
-            section.save()
+        if pd.isna(i) == False and i.split('-')[0] != 'T001' and i.split('-')[0] != 'T004':
+            Faculty = Faculty_T(FacultyID=int(i.split('-')[0]), FacultyName=i.split('-')[1].translate(str.maketrans('', '', digits)))
+            Faculty.save()
+
+
+# Course_T
+    #dfcourse = df[["COFFER_COURSE_ID","COFFERED_WITH", "CREDIT_HOUR", "COURSE_NAME"]]
+    #data = dfcourse.values.tolist()
+    #for i in data:
+        #if pd.isna(i[0]) == False and pd.isna(i[1]) == False:
+            #coofferedwithlist=i[1].split(',')
+            #for j in coofferedwithlist:
+                #coursespair = i[0], j
+                #for singlecourse in coursespair:
+                    #course = Course_T(CourseID=singlecourse, CourseName=i[3], CreditHour=i[2])
+                    #course.save()
+    #datascriptRevenue
+
+
+#CoOfferedCourse_T
+    #datascriptRevenue
+
+
+
 
 
 populatedata('Autumn', '2020')

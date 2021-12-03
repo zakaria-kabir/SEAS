@@ -22,9 +22,8 @@ class Department_T(models.Model):
 
 class Faculty_T(models.Model):
     FacultyID = models.IntegerField(primary_key=True)
-    FacultyName = models.CharField(max_length=30)
-    DeptID = models.ForeignKey(
-        Department_T, null=True, on_delete=models.CASCADE)
+    FacultyName = models.CharField(max_length=50)
+    DeptID = models.ForeignKey(Department_T, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.FacultyID
@@ -32,17 +31,20 @@ class Faculty_T(models.Model):
 
 class Course_T(models.Model):
     CourseID = models.CharField(max_length=7, primary_key=True)
-    CourseName = models.CharField(max_length=30)
+    CourseName = models.CharField(max_length=100)
     CreditHour = models.IntegerField()
-    DeptID = models.ForeignKey(
-        Department_T, null=True, on_delete=models.CASCADE)
-   
+    DeptID = models.ForeignKey(Department_T, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.CourseID
-class CO_OFFERED_COURSE_T(models.Model):
-    courseID = models.ForeignKey(Course_T, on_delete=models.CASCADE)
-    CoOfferedCourseID = models.ForeignKey(Course_T, on_delete=models.CASCADE)
+
+
+class CoOfferedCourse_T(models.Model):
+    OfferedCourseID = models.ForeignKey(Course_T, on_delete=models.CASCADE, null=True, related_name="OfferedCourseID")
+    Coofferredwith = models.ForeignKey(Course_T, on_delete=models.CASCADE, null=True, related_name="Coofferredwith")
+
+    class Meta:
+        unique_together = (("OfferedCourseID", "Coofferredwith"),)
 
 
 class Room_T(models.Model):
@@ -54,18 +56,17 @@ class Room_T(models.Model):
 
 
 class Section_T(models.Model):
-    SectionID = models.CharField(max_length=23, primary_key=True)
+    SectionID = models.CharField(max_length=40, primary_key=True)
     SectionNum = models.IntegerField()
     Semester = models.CharField(max_length=6)
     Year = models.IntegerField()
     CourseID = models.ForeignKey(Course_T, on_delete=models.CASCADE)
-    FacultyID = models.ForeignKey(
-        Faculty_T, null=True, on_delete=models.CASCADE)
+    FacultyID = models.ForeignKey(Faculty_T, null=True, on_delete=models.CASCADE)
     SectionCapacity = models.IntegerField(null=True)
     SectionEnrolled = models.IntegerField(null=True)
     StartTime = models.TimeField(null=True)
     EndTime = models.TimeField(null=True)
-    Day = models.CharField(max_length=2, null=True)
+    Day = models.CharField(max_length=10, null=True)
     RoomID = models.ForeignKey(Room_T, null=True, on_delete=models.CASCADE)
     Blocked = models.CharField(max_length=3, null=True)
     MaxSize = models.IntegerField(null=True)
