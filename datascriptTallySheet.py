@@ -43,8 +43,9 @@ def populatedata(sem, year):
     data = df.values.tolist()
    # print(data)
     for i in data[0:]:
-        if pd.isna(i[7])==False:
-            continue
+        if pd.isna(i[11])==False:
+                     continue
+
 
 populatedata('Autumn', '2020')
 populatedata('Autumn', '2021')
