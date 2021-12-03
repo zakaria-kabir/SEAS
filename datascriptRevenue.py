@@ -29,10 +29,17 @@ for i in data[0:16]:
             course = Course_T(CourseID=i[1], CourseName=i[10],CreditHour=i[4])
             course.save()
 
+
 #CO_OFFERED_COURSE_T ,  CoOfferedCourseID 
             coList=i[2].split(",")
             for j in coList:
                 print(j)
+
+#CO_OFFERED_COURSE_T 
+
+            coList=i[2].split(",")
+            for j in coList:
+
                 coCourse=CO_OFFERED_COURSE_T(CourseID=i[1],CoOfferedCourseID=j)
                 coCourse.save()
 
