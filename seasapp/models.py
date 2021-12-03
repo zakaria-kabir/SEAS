@@ -40,6 +40,9 @@ class Course_T(models.Model):
 
     def __str__(self):
         return self.CourseID
+class CO_OFFERED_COURSE_T(models.Model):
+    courseID = models.ForeignKey(Course_T, on_delete=models.CASCADE)
+    CoOfferedCourseID = models.ForeignKey(Course_T, on_delete=models.CASCADE)
 
 
 class Room_T(models.Model):
