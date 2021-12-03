@@ -38,7 +38,14 @@ def populatedata(sem, year):
     #Department_T
     #None
 
-    #
+    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
+    data = df.values.tolist()
+    # print(data)
+    for i in data[0:]: 
+        facultyID,facultyName = i[11].split("-")
+        if pd.isna(facultyID) and pd.isna(facultyName):
+            continue
+        print(facultyID,facultyName)
 
 
 populatedata('Autumn', '2020')
