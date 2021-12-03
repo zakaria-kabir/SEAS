@@ -47,7 +47,7 @@ def populatedata(sem, year):
             continue
         print(facultyID,facultyName)
 
-    #hello
+    #hello world
 
 
 populatedata('Autumn', '2020')
