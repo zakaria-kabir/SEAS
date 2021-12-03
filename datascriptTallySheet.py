@@ -43,17 +43,8 @@ def populatedata(sem, year):
     data = df.values.tolist()
     for i in data[0:]:
         if pd.isna(i[3])==False:
-            courseidfk = Course_T.objects.get
-            # ('''
-        #     SELECT CourseID
-        #     FROM seasapp_Course_T
-        #     WHERE CourseID='CIS101'
-        # ''')
+            for i in data[0:]: courseidfk = Course_T.objects.get
             facultyidfk = Faculty_T.objects.get
-        #     ('''
-        #     SELECT FacultyID
-        #     FROM seasapp_Faculty_T
-        # ''')
             section = Section_T(SectionNum=i[3],Year=year,Semester=sem,CourseID=courseidfk,FacultyID=facultyidfk,SectionCapacity=i[5],SectionEnrolled=i[6],StartTime=i[12],
             EndTime=i[13], Day=[14], Blocked=i[9])
             section.save()
