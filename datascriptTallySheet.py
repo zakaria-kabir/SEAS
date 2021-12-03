@@ -2,8 +2,6 @@ import django
 import pandas as pd
 import os
 
-from pandas.core.frame import DataFrame
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seas.settings")
 
 django.setup()
@@ -15,7 +13,7 @@ def populatedata(sem, year):
     df = pd.read_excel(filename, skiprows=3)
 
     #Room_T
-    dfroom = df.drop_duplicates(subset=["ROOM_ID"])
+    df = df.drop_duplicates(subset=["ROOM_ID"])
     data = df.values.tolist()
     for i in data[0:]:
         if pd.isna(i[7])==False:
@@ -39,52 +37,7 @@ def populatedata(sem, year):
 
     #Department_T
     #None
-     #Faculty_t
-    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-    # print(data)
-    for i in data[0:]: 
-        facultyID,facultyName = i[11].split("-")
-        if pd.isna(facultyID) and pd.isna(facultyName):
-            continue
-        print(facultyID,facultyName)
 
-
-
-    #Faculty_t
-    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-    for i in data[0:]:
-        print(i[11].split("-")[0])
-        #ok
-       
-
-     #Faculty_t
-    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-    # print(data)
-    for i in data[0:]: 
-        facultyID,facultyName = i[11].split("-")
-        if pd.isna(facultyID) and pd.isna(facultyName):
-            continue
-        print(facultyID,facultyName)
-
-    # Faculty_T
-    dffaculty = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-   #print(data)
-    #for i in data[0:]:
-     #   if pd.isna(i[11])==False:
-      #   continue
-
-
-    # Faculty_T
-    dfFaculty = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
-    data = df.values.tolist()
-   # print(data)
-    for i in data[0:]:
-        if pd.isna(i[11])==False:
-         print(FacultyID,FacultyName)
 #Section_T
     df = df.drop_duplicates(subset=["SECTION"])
     data = df.values.tolist()
@@ -95,7 +48,6 @@ def populatedata(sem, year):
             section = Section_T(SectionNum=i[3],Year=year,Semester=sem,CourseID=courseidfk,FacultyID=facultyidfk,SectionCapacity=i[5],SectionEnrolled=i[6],StartTime=i[12],
             EndTime=i[13], Day=[14], Blocked=i[9])
             section.save()
-
 
 populatedata('Autumn', '2020')
 populatedata('Autumn', '2021')
