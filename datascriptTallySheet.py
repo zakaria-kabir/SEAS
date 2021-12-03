@@ -44,7 +44,7 @@ def populatedata(sem, year):
    # print(data)
     for i in data[0:]:
         if pd.isna(i[11])==False:
-                     continue
+         continue
 
 
 populatedata('Autumn', '2020')
