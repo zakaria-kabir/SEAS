@@ -38,6 +38,17 @@ def populatedata(sem, year):
     #Department_T
     #None
 
+
+    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
+    data = df.values.tolist()
+    # print(data)
+    for i in data[0:]: 
+        facultyID,facultyName = i[11].split("-")
+        if pd.isna(facultyID) and pd.isna(facultyName):
+            continue
+        print(facultyID,facultyName)
+
+
 #Section_T
     df = df.drop_duplicates(subset=["SECTION"])
     data = df.values.tolist()
@@ -48,6 +59,7 @@ def populatedata(sem, year):
             section = Section_T(SectionNum=i[3],Year=year,Semester=sem,CourseID=courseidfk,FacultyID=facultyidfk,SectionCapacity=i[5],SectionEnrolled=i[6],StartTime=i[12],
             EndTime=i[13], Day=[14], Blocked=i[9])
             section.save()
+
 
 populatedata('Autumn', '2020')
 populatedata('Autumn', '2021')
