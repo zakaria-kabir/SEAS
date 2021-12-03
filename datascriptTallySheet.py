@@ -2,6 +2,8 @@ import django
 import pandas as pd
 import os
 
+from pandas.core.frame import DataFrame
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seas.settings")
 
 django.setup()
@@ -13,7 +15,7 @@ def populatedata(sem, year):
     df = pd.read_excel(filename, skiprows=3)
 
     #Room_T
-    df = df.drop_duplicates(subset=["ROOM_ID"])
+    dfroom = df.drop_duplicates(subset=["ROOM_ID"])
     data = df.values.tolist()
     for i in data[0:]:
         if pd.isna(i[7])==False:
@@ -38,7 +40,13 @@ def populatedata(sem, year):
     #Department_T
     #None
 
-    #
+    #Faculty_t
+    df = df.drop_duplicates(subset=["FACULTY_FULL_NAME"])
+    data = df.values.tolist()
+    for i in data[0:]:
+        print(i[11].split("-")[0])
+        #ok
+       
 
 
 populatedata('Autumn', '2020')
