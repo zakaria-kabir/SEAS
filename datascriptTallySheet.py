@@ -48,8 +48,8 @@ def populatedata(sem, year):
             section = Section_T(SectionNum=i[3],Year=year,Semester=sem,CourseID=courseidfk,FacultyID=facultyidfk,SectionCapacity=i[5],SectionEnrolled=i[6],StartTime=i[12],
             EndTime=i[13], Day=[14], Blocked=i[9])
             section.save()
-            # print(pd)
 
+            
 populatedata('Autumn', '2020')
 populatedata('Autumn', '2021')
 populatedata('Spring', '2020')
