@@ -38,7 +38,6 @@ def populatedata(sem, year):
     #Department_T
     #None
 
-    
 #Section_T
     df = df.drop_duplicates(subset=["SECTION"])
     data = df.values.tolist()
