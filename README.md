@@ -1,4 +1,22 @@
 # SEAS
  ## Student Enrollment Analysis System
-
- DB is located into "..\SEAS\seas\seasResources" folder. Before running the server kindly put the database to the mysql server folder. If you are running xampp then       kindly put the folder into "..\xampp\mysql\data" folder. Then run xampp apache and mysql server. 
+ ### Steps to start working:
+ 1. create a user 
+        name "seas",
+        host name: local,
+        password: seas,
+        mark all checkbox
+        -> go
+ 2. Create a Database
+        Database name: seasDB
+ 3. open model.py script in vs code. 
+        run:
+        python manage.py migrate
+ 4. open datascriptTallySheet.py
+        click run.
+ 5. open datascriptRevenue.py
+        click run.
+ 6. Now you can do stuffs.
+ 7. To run project:
+        python manage.py runserver
+        
