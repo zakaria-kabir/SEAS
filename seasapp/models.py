@@ -36,7 +36,7 @@ class Course_T(models.Model):
     CreditHour = models.IntegerField()
     DeptID = models.ForeignKey(
         Department_T, null=True, on_delete=models.CASCADE)
-    CoOfferdCourse = models.CharField(max_length=7, null=True)
+   # CoOfferdCourse = models.CharField(max_length=7, null=True)
 
     def __str__(self):
         return self.CourseID
