@@ -50,3 +50,10 @@ ORDER BY SectionEnrolled ASC;
 -- INNER JOIN seasapp_school_t s ON s.SchoolTitle = d.SchoolTitle_id 
 -- INNER JOIN seasapp_section_t sec ON sec.CourseID_id = c.CourseID 
 -- WHERE SectionEnrolled = "10" AND Semester="Spring" AND SchoolTitle="SBE"
+
+
+-- IUB available resources
+SELECT RoomCapacity AS ClassSize, Count(*) AS IUB_Resourse , RoomCapacity*Count(*) AS Capacity
+FROM seasapp_section_t S INNER JOIN seasapp_room_t R ON S.RoomID_id = R.RoomID
+GROUP BY RoomCapacity 
+ORDER BY RoomCapacity ;
