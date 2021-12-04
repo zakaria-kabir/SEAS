@@ -57,3 +57,15 @@ SELECT RoomCapacity AS ClassSize, Count(*) AS IUB_Resourse , RoomCapacity*Count(
 FROM seasapp_section_t S INNER JOIN seasapp_room_t R ON S.RoomID_id = R.RoomID
 GROUP BY RoomCapacity 
 ORDER BY RoomCapacity ;
+
+
+----- Enrollmentwise Capacity
+SELECT Count(SectionNum)
+FROM seasapp_section_t
+where SectionEnrolled between 1 and 10  11 and 20
+------ availability of course offering comparison
+Select Count(*)
+FROM (Select RoomId
+FROM (seasapp_section_t sec INNER JOIN seasapp_room_t r ON sec.RoomID_id = r.RoomID)
+where RoomCapacity BETWEEN 20 AND 30 AND Year BETWEEN 2020 AND 2021 
+GROUP BY RoomId) AS Room
