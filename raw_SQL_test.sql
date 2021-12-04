@@ -154,6 +154,7 @@ ON sec.RoomID_id= r.RoomID
 WHERE s.schoolTitle = "SLASS"
 AND semester = "Spring"
 AND YEAR =2021;
+ORDER BY RoomCapacity ;
 
 ---
 
