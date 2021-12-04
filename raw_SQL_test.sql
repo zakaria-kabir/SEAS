@@ -156,3 +156,12 @@ AND semester = "Spring"
 AND YEAR =2021;
 ORDER BY RoomCapacity ;
 
+
+SELECT SUM(groupbycredit.sum)
+FROM 
+(SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum
+FROM (seasapp_section_t AS S INNER JOIN seasapp_course_t AS C ON CourseID_id=CourseID)
+WHERE Semester="Summer" AND Year=2021 AND DeptID_id="SBE"
+GROUP BY CreditHour) AS groupbycredit;
+
+
