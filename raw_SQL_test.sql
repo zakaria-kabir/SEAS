@@ -69,3 +69,89 @@ FROM (Select RoomId
 FROM (seasapp_section_t sec INNER JOIN seasapp_room_t r ON sec.RoomID_id = r.RoomID)
 where RoomCapacity BETWEEN 20 AND 30 AND Year BETWEEN 2020 AND 2021 
 GROUP BY RoomId) AS Room
+
+-- IUB AVAILABLE RESOURCES (part 1)
+SELECT s.schoolTitle,SUM(sectionEnrolled)
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021;
+
+--FOR AVERAGE
+
+SELECT s.schoolTitle,AVG(sectionEnrolled)
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021;
+
+--AVG ROOM CAPACITY
+
+SELECT s.schoolTitle,roomID,AVG(roomCapacity)
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021;
+
+
+
+
+
+
+
+
+
+
+
+--DIFFERENCE
+
+SELECT s.schoolTitle,roomID,AVG(roomCapacity)-Avg(sectionEnrolled) AS difference
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021;
+
+PERCENTAGE
+
+SELECT s.schoolTitle,roomID,(AVG(roomCapacity)-Avg(sectionEnrolled))*100/AVG(RoomCapacity) AS percentage
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SLASS"
+AND semester = "Spring"
+AND YEAR =2021;
+
