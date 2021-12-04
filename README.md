@@ -8,7 +8,7 @@
         mark all checkbox
         -> go
  2. Create a Database
-        Database name: seasDB
+        Database name: seas
  3. open model.py script in vs code. 
         run:
         python manage.py migrate
