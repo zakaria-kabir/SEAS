@@ -12,10 +12,9 @@
  3. open model.py script in vs code. 
         run:
         python manage.py migrate
- 4. open datascriptTallySheet.py
+ 4. open PopulationScriptMain.py
         click run.
- 5. open datascriptRevenue.py
-        click run.
+ 5. It will take time. And dont run it again. It will waste your 40min-1 hour again.
  6. Now you can do stuffs.
  7. To run project:
         python manage.py runserver
