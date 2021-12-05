@@ -267,4 +267,63 @@ ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn");
 
 
 
+--------------------------------------------------------
+SELECT *
+FROM (
+SELECT *
+FROM
+(SELECT Year,Semester,SUM(groupbycredit.sum)
+FROM
+(SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+FROM seasapp_department_t AS D INNER JOIN seasapp_course_t AS C ON DeptID=DeptID_id
+                             INNER JOIN seasapp_section_t AS S ON CourseID=CourseID_id
+WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN 2009 AND 2021 AND SchoolTitle_id = "SBE"
+GROUP BY Year,Semester,Credithour) AS groupbycredit
+GROUP BY Year,Semester
+ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn")) AS Something S INNER JOIN
+
+SELECT *
+FROM
+(SELECT Year,Semester,SUM(groupbycredit.sum)
+FROM
+(SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+FROM seasapp_department_t AS D INNER JOIN seasapp_course_t AS C ON DeptID=DeptID_id
+                             INNER JOIN seasapp_section_t AS S ON CourseID=CourseID_id
+WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN 2009 AND 2021 AND SchoolTitle_id = "SETS"
+GROUP BY Year,Semester,Credithour) AS groupbycredit
+GROUP BY Year,Semester
+ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn")) AS NOTHING N
+ON S.Semseter = N.Semester) AS EVERYTHING
+
+
+
+
+-- ================================================================================================================================
+
+SELECT *
+FROM (
+SELECT *
+FROM
+(SELECT Year,Semester,SUM(groupbycredit.sum)
+FROM
+(SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+FROM seasapp_department_t AS D INNER JOIN seasapp_course_t AS C ON DeptID=DeptID_id
+                             INNER JOIN seasapp_section_t AS S ON CourseID=CourseID_id
+WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN 2009 AND 2021 AND SchoolTitle_id = "SBE"
+GROUP BY Year,Semester,Credithour) AS groupbycredit
+GROUP BY Year,Semester
+ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn")) AS Something INNER JOIN
+SELECT *
+FROM
+(SELECT Year,Semester,SUM(groupbycredit.sum)
+FROM
+(SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+FROM seasapp_department_t AS D INNER JOIN seasapp_course_t AS C ON DeptID=DeptID_id
+                             INNER JOIN seasapp_section_t AS S ON CourseID=CourseID_id
+WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN 2009 AND 2021 AND SchoolTitle_id = "SETS"
+GROUP BY Year,Semester,Credithour) AS groupbycredit
+GROUP BY Year,Semester
+ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn")) AS NOTHING
+ON S.Semseter = N.Semester) AS EVERYTHING
+
 
