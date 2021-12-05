@@ -1,4 +1,3 @@
-from seasapp.models import *
 import django
 import pandas as pd
 import os
@@ -7,7 +6,7 @@ from string import digits
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seas.settings")
 
 django.setup()
-
+from seasapp.models import *
 
 def populatedata(sem, year):
     # Reading data from excel
