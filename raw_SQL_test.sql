@@ -165,3 +165,77 @@ WHERE Semester="Summer" AND Year=2021 AND DeptID_id="SBE"
 GROUP BY CreditHour) AS groupbycredit;
 
 
+------WORKED---- IUB AVAILABLE RESOURSCES
+
+
+SELECT SUM(sectionEnrolled) AS RESULTS
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021
+
+UNION
+SELECT AVG(sectionEnrolled)
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021
+UNION
+SELECT AVG(roomCapacity)
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021
+
+UNION
+
+SELECT AVG(roomCapacity)-Avg(sectionEnrolled) AS difference
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021
+
+UNION
+
+SELECT (AVG(roomCapacity)-Avg(sectionEnrolled))*100/AVG(RoomCapacity) AS percentage
+FROM seasapp_course_t c
+JOIN seasapp_department_t d
+ON c.DeptID_id = d.DeptID
+JOIN seasapp_school_t s
+ON d.SchoolTitle_id = s.SchoolTitle
+JOIN seasapp_section_t sec
+ON c.CourseID = sec.CourseID_id
+JOIN seasapp_room_t r
+ON sec.RoomID_id= r.RoomID
+WHERE s.schoolTitle = "SBE"
+AND semester = "Spring"
+AND YEAR =2021;
+
