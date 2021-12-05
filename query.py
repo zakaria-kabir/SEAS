@@ -21,7 +21,7 @@ def classroom_requirement_course_offer(Sem, Year):
         cursor.execute('''
         SELECT COUNT(*) AS Sections
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 1 AND 10
+        WHERE SectionCapacity BETWEEN 1 AND 10
         AND semester = "{}"
         AND YEAR ={}
 
@@ -29,7 +29,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 11 AND 20
+        WHERE SectionCapacity BETWEEN 11 AND 20
         AND semester = "{}"
         AND YEAR ={}
 
@@ -37,7 +37,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 21 AND 30
+        WHERE SectionCapacity BETWEEN 21 AND 30
         AND semester = "{}"
         AND YEAR ={}
 
@@ -45,7 +45,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 31 AND 35
+        WHERE SectionCapacity BETWEEN 31 AND 35
         AND semester = "{}"
         AND YEAR ={}
 
@@ -53,7 +53,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 36 AND 40
+        WHERE SectionCapacity BETWEEN 36 AND 40
         AND semester = "{}"
         AND YEAR ={}
 
@@ -61,7 +61,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 41 AND 50
+        WHERE SectionCapacity BETWEEN 41 AND 50
         AND semester = "{}"
         AND YEAR ={}
 
@@ -69,7 +69,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 51 AND 55
+        WHERE SectionCapacity BETWEEN 51 AND 55
         AND semester = "{}"
         AND YEAR ={}
 
@@ -77,7 +77,7 @@ def classroom_requirement_course_offer(Sem, Year):
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
-        WHERE SectionEnrolled BETWEEN 56 AND 65
+        WHERE SectionCapacity BETWEEN 56 AND 65
         AND semester = "{}"
         AND YEAR ={}
 
