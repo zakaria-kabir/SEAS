@@ -165,6 +165,7 @@ WHERE Semester="Summer" AND Year=2021 AND DeptID_id="SBE"
 GROUP BY CreditHour) AS groupbycredit;
 
 
+
 ------WORKED---- IUB AVAILABLE RESOURSCES
 
 
@@ -238,4 +239,6 @@ ON sec.RoomID_id= r.RoomID
 WHERE s.schoolTitle = "SBE"
 AND semester = "Spring"
 AND YEAR =2021;
+
+
 
