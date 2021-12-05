@@ -20,4 +20,16 @@ django.setup()
 #         count+=1
 
 # print(count)
-print(resources_usage("SBE", "Spring", 2020))
+# print(resources_usage("SBE", "Spring", 2020))
+
+
+
+s = ["B-", "b-0",'B',"-1","0"]
+
+for i in s:
+
+    if i.find('B') == -1 and i.find('b') == -1:
+        i='B'
+    else:
+        i=None
+    print(i)

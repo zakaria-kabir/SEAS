@@ -11,13 +11,13 @@ from seasapp.models import *
 
 
 # Delete if exists
-# School_T.objects.all().delete()
-# Department_T.objects.all().delete()
-# Faculty_T.objects.all().delete()
-# Course_T.objects.all().delete()
+School_T.objects.all().delete()
+Department_T.objects.all().delete()
+Faculty_T.objects.all().delete()
+Course_T.objects.all().delete()
 CoOfferedCourse_T.objects.all().delete()
-# Room_T.objects.all().delete()
-# Section_T.objects.all().delete()
+Room_T.objects.all().delete()
+Section_T.objects.all().delete()
 
 # Reading data from revenue excel
 dft1 = tallysheet.populatedata('Autumn', '2020')
@@ -28,7 +28,7 @@ dft5 = tallysheet.populatedata('Summer', '2021')
 dfr = rev.populate('Revenue.xlsx', 'Data')
 
 dfr = dfr.rename(columns={"RoomSize": "ROOM_CAPACITY",
-                 "Sec": "SECTION", "CourseID": "COFFER_COURSE_ID", "stuNo": "ENROLLED", "Crs":"CREDIT_HOUR"})
+                 "Sec": "SECTION", "CourseID": "COFFER_COURSE_ID", "stuNo": "ENROLLED", "Crs": "CREDIT_HOUR", "size": "CAPACITY"})
 
 dataframes=[dft1,dft2,dft3,dft4,dft5,dfr]
 dfconcat = pd.concat(dataframes)
@@ -110,28 +110,29 @@ for i in data[0:]:
 # faculty is kept null
 
 dfsection = dfconcat[["SECTION", "Semester", "Year", "COFFER_COURSE_ID",
-                      "ENROLLED", "ST_MW", "size", "BLOCKED", "CAPACITY", "STRAT_TIME", "END_TIME", "ROOM_ID"]]
+                      "ENROLLED", "ST_MW", "BLOCKED", "CAPACITY", "STRAT_TIME", "END_TIME", "ROOM_ID"]]
 dfsection = dfsection.drop_duplicates(subset=("SECTION", "Semester", "Year", "COFFER_COURSE_ID"))
-
 data = dfsection.values.tolist()
+
 for i in data:
     if pd.isna(i[3])==False:
         secidpk=str(int(i[0])) + " " +i[3]+" "+i[1]+" "+str(int(i[2]))
         courseIDfk=Course_T.objects.get(pk=i[3])
-        rooomIDfk=Room_T.objects.get(pk=i[11])
-        if str(i[7]).find('B') == True or str(i[7]).find('b') == True:
-            i[7] == 'B'
+        rooomIDfk=Room_T.objects.get(pk=i[10])
+
+        if str(i[6]).find('B') == 0 or str(i[6]).find('b') == 0:
+            i[6] = 'B'
         else:
-            i[7] == None
+            i[6] = None
+
+        if str(i[8]).find(':') == -1:
+            i[8]=None
 
         if str(i[9]).find(':') == -1:
             i[9]=None
 
-        if str(i[10]).find(':') == -1:
-            i[10]=None
-
         section=Section_T(SectionID=secidpk, SectionNum=i[0], CourseID=courseIDfk, Semester=i[1],
-                          Year=i[2], SectionEnrolled=i[4], MaxSize=i[6], Day=i[5], Blocked=i[7], SectionCapacity=i[8], StartTime=i[9], EndTime=i[10], RoomID=rooomIDfk)
+                          Year=i[2], SectionEnrolled=i[4], Day=i[5], Blocked=i[6], SectionCapacity=i[7], StartTime=i[8], EndTime=i[9], RoomID=rooomIDfk)
         section.save()
     
     

@@ -69,7 +69,7 @@ class Section_T(models.Model):
     Day = models.CharField(max_length=10, null=True)
     RoomID = models.ForeignKey(Room_T, null=True, on_delete=models.CASCADE)
     Blocked = models.CharField(max_length=3, null=True)
-    MaxSize = models.IntegerField(null=True)
+    #MaxSize = models.IntegerField(null=True)
 
     class Meta:
         unique_together = (("SectionNum", "Semester", "Year", "CourseID"),)
