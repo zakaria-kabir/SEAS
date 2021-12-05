@@ -32,7 +32,7 @@ dfr = dfr.rename(columns={"RoomSize": "ROOM_CAPACITY",
 
 dataframes=[dft1,dft2,dft3,dft4,dft5,dfr]
 dfconcat = pd.concat(dataframes)
-
+dfconcat = dfconcat.astype(object).where(pd.notnull(dfconcat), None)
 
 offered_cooffered_set = set()
 #Course_T
@@ -113,29 +113,23 @@ dfsection = dfconcat[["SECTION", "Semester", "Year", "COFFER_COURSE_ID",
                       "ENROLLED", "ST_MW", "size", "BLOCKED", "CAPACITY", "STRAT_TIME", "END_TIME", "ROOM_ID"]]
 dfsection = dfsection.drop_duplicates(subset=("SECTION", "Semester", "Year", "COFFER_COURSE_ID"))
 
-
 data = dfsection.values.tolist()
 for i in data:
-
     if pd.isna(i[3])==False:
-        secidpk="Sec " + str(int(i[0])) + " " +i[3]+" "+i[1]+" "+str(int(i[2]))
+        secidpk=str(int(i[0])) + " " +i[3]+" "+i[1]+" "+str(int(i[2]))
         courseIDfk=Course_T.objects.get(pk=i[3])
         rooomIDfk=Room_T.objects.get(pk=i[11])
-        if str(i[7]).find('B') == 0 or str(i[7]).find('b') == 0:
+        if str(i[7]).find('B') == True or str(i[7]).find('b') == True:
             i[7] == 'B'
         else:
             i[7] == None
-
-        if pd.isna(i[8]) == False:
-            continue
-        else:
-            i[8]=None
 
         if str(i[9]).find(':') == -1:
             i[9]=None
 
         if str(i[10]).find(':') == -1:
             i[10]=None
+
         section=Section_T(SectionID=secidpk, SectionNum=i[0], CourseID=courseIDfk, Semester=i[1],
                           Year=i[2], SectionEnrolled=i[4], MaxSize=i[6], Day=i[5], Blocked=i[7], SectionCapacity=i[8], StartTime=i[9], EndTime=i[10], RoomID=rooomIDfk)
         section.save()
