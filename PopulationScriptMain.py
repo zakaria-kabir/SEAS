@@ -11,13 +11,13 @@ from seasapp.models import *
 
 
 # Delete if exists
-# School_T.objects.all().delete()
-# Department_T.objects.all().delete()
-# Faculty_T.objects.all().delete()
-# Course_T.objects.all().delete()
-# CoOfferedCourse_T.objects.all().delete()
-# Room_T.objects.all().delete()
-# Section_T.objects.all().delete()
+School_T.objects.all().delete()
+Department_T.objects.all().delete()
+Faculty_T.objects.all().delete()
+Course_T.objects.all().delete()
+CoOfferedCourse_T.objects.all().delete()
+Room_T.objects.all().delete()
+Section_T.objects.all().delete()
 
 # Reading data from revenue excel
 dft1 = tallysheet.populatedata('Autumn', '2020')
