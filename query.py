@@ -25,7 +25,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -33,7 +33,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -41,7 +41,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -49,7 +49,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -57,7 +57,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -65,7 +65,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -73,7 +73,7 @@ def classroom_requirement_course_offer(Sem, Year):
         AND semester = "{}"
         AND YEAR ={}
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM seasapp_section_t 
@@ -83,9 +83,12 @@ def classroom_requirement_course_offer(Sem, Year):
 
 
         '''.format(Sem, Year, Sem, Year, Sem, Year, Sem, Year, Sem, Year, Sem, Year, Sem, Year, Sem, Year))
-
+        sections=[]
         col = cursor.fetchall()
-    return col
+        for i in col:
+            for j in i:
+                sections.append(j)
+    return (sections)
 
 
 def enrollment_wise_course_school(School, Sem, Year):
@@ -95,49 +98,49 @@ def enrollment_wise_course_school(School, Sem, Year):
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 1 AND 10
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 11 AND 20
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 21 AND 30
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 31 AND 35
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 36 AND 40
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 41 AND 50
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 51 AND 55
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={} AND SectionEnrolled BETWEEN 56 AND 60
 
-        UNION
+        UNION ALL
 
         SELECT COUNT(*)
         FROM joinedtable
@@ -156,13 +159,13 @@ def resources_usage(School, Sem, Year):
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={}
 
-        UNION
+        UNION ALL
 
         SELECT AVG(sectionEnrolled)
         FROM joinedtable
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={}
 
-        UNION
+        UNION ALL
 
         SELECT AVG(roomCapacity)
         FROM seasapp_course_t c
@@ -176,7 +179,7 @@ def resources_usage(School, Sem, Year):
         ON sec.RoomID_id= r.RoomID
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={}
 
-        UNION
+        UNION ALL
 
         SELECT AVG(roomCapacity)-Avg(sectionEnrolled) AS difference
         FROM seasapp_course_t c
@@ -190,7 +193,7 @@ def resources_usage(School, Sem, Year):
         ON sec.RoomID_id= r.RoomID
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year={}
 
-        UNION
+        UNION ALL
 
         SELECT((AVG(roomCapacity)-Avg(sectionEnrolled))/AVG(RoomCapacity))*100 AS percentage
         FROM seasapp_course_t c
@@ -241,6 +244,12 @@ def iub_revenue(Yearfrom, Yearto, School):
         '''.format(Yearfrom, Yearto, School))
 
         col = cursor.fetchall()
+        # t1 = []
+        # t2 = []
+        # t3 = []
+        # for i in col:
+        #     #e = [item for t in i for item in t]
+        #     t1.append[i[0]]
     return col
 
 
@@ -260,4 +269,5 @@ def SETS_revenue(Yearfrom, Yearto, Dept):
         '''.format(Yearfrom, Yearto, Dept))
 
         col = cursor.fetchall()
+
     return col

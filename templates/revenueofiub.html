@@ -1,0 +1,246 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SEAS{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <h3 class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>Revenue of IUB
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <form id="myform" action="view_revenue_of_iub" method="post">
+        {% csrf_token %}
+        <table class="form-table">
+            <tr>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="sem">School</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="scl" name="scl"
+                        form="myform" title="Select School" multiple>
+                        {% for i in schools %}
+                        {% if i == scl %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearfrom">Year From</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year1" name="year1"
+                        form="myform" title="Select Year">
+                        {% for i in yearfrom %}
+                        {% if i == year1 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearto">Year To</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year2" name="year2" form="myform" title="Select Year">
+                        {% for i in yearto %}
+                        {% if i == year2 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td style="text-align: center;" class="last-row" colspan="2">
+                    <button class="btn btn-primary">Search</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+<div class="row mt-0.5" id="chart">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <div class="row">
+                    <div class="col-sm-8 text-left">
+                        <h3 class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>Classroom requirement as per course offering (Summary)</h3>
+                        <span class="label label-success text-center" id="whatisshowing"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="col-sm-4">
+                        <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                        <label class="btn btn-sm btn-primary btn-simple" id="0">
+                            <input type="radio" class="d-none d-sm-none" name="options">
+                            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Revenue Trend </span>
+                            <span class="d-block d-sm-none">
+                                <i class="tim-icons icon-gift-2"></i>
+                            </span>
+                        </label>
+                        <label class="btn btn-sm btn-primary btn-simple" id="1">
+                            <input type="radio" class="d-none" name="options">
+                            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Revenue Distribution</span>
+                            <span class="d-block d-sm-none">
+                                <i class="tim-icons icon-tap-02"></i>
+                            </span>
+                        </label>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body" style="height:500px;">
+                <div class="chart-area">
+                    <canvas id="linechart" height="100%"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    var search = {{ search }}
+
+    if (search == 1) {
+        document.getElementById("chart").style.display = "none";
+    }
+</script>
+<script>
+
+    var ctx = document.getElementById("linechart").getContext("2d");
+    colors = ['#00FFFF', '#A52A2A', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
+    
+    revenue = {{revenue|safe}}
+    revenuelabel={{revenuesemyear|safe}}
+    selectedschool={{selectedschool|safe}}
+
+    
+
+    
+    $("#0").click(function () {
+        var chatdata=[]
+        for(var i=0;i<selectedschool.length;i++){
+        var originaldata = {
+            type:'line',
+            fill: false,
+            label: selectedschool[i],
+            data: revenue[i],
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+        
+    };
+    chatdata.push(originaldata);
+    }
+
+    var data = {
+            labels: revenuelabel,
+			datasets : chatdata
+            
+		};
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            scaleShowValues: true,
+            title: {
+                display: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        autoSkip: false
+                    },
+                    type: 'linear',
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    },
+                }],
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+        });
+    
+           $("#1").click(function () {
+        var chatdata=[]
+        for(var i=0;i<selectedschool.length;i++){
+        var originaldata = {
+            type:'line',
+            fill: true,
+            label: selectedschool[i],
+            data: revenue[i],
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+        
+    };
+    chatdata.push(originaldata);
+    }
+
+    var data = {
+            labels: revenuelabel,
+			datasets : chatdata
+            
+		};
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+            title: {
+                display: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    type: 'linear',
+                    stacked: true
+                }],
+                xAxes: [{
+                    ticks: {
+                        autoSkip: false
+                    },
+                }],
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+        });
+    
+
+</script>
+
+
+
+{% endblock javascripts %}
+
+

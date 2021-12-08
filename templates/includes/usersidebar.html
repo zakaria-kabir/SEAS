@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<body>
+  <div class="wrapper " >
+    <div class="sidebar" data-color="purple" data-background-color="white">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="homeview" class="simple-text logo-normal">
+          Dashboard
+        </a>
+      </div>
+      
+
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="{% if 'cls_req' in segment %} active {% endif %}">
+            <a href="{% url 'view_classroom_requirement_course_offer' %}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Classroom Requirement</p>
+            </a>
+          </li>
+          <li class="{% if 'enroll' in segment %} active {% endif %}">
+            <a href="{% url 'view_enrolment_course_school' %}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Enrollment wise Course</p>
+            </a>
+          </li>
+          <li class="{% if 'rev' in segment %} active {% endif %}">
+            <a href="{% url 'view_revenue_of_iub' %}">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Revenue of IUB</p>
+            </a>
+          </li>
+
+          <!-- your sidebar here -->
+        </ul>
+      </div>
+    </div>
+    
+</body>
+
+</html>

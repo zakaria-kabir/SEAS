@@ -15,7 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
+from seasapp import views
+from django.contrib.auth.views import LogoutView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', views.loginview, name='loginpage'),
+    path('', views.homeview, name='home'),
+
+    path('view_classroom_requirement_course_offer',
+        views.view_classroom_requirement_course_offer, name='view_classroom_requirement_course_offer'),
+    path('view_enrolment_course_school',
+         views.view_enrolment_course_school, name='view_enrolment_course_school'),
+    path('view_revenue_of_iub',
+         views.view_revenue_of_iub, name='view_revenue_of_iub'),
 ]

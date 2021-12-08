@@ -20,16 +20,16 @@ django.setup()
 #         count+=1
 
 # print(count)
-# print(resources_usage("SBE", "Spring", 2020))
+# a=iub_revenue(2020,2021,"Spring")
+# print(a[0],a[1],a[2])
 
+l = ['1','2','3']
+a=3
+print([l[i:i+a] for i in range(0, len(l), 3)])
 
+# a = [((1,), (2,), (4,), (5,)), ((10,), (12,), (14,), (15,))]
 
-s = ["B-", "b-0",'B',"-1","0"]
-
-for i in s:
-
-    if i.find('B') == -1 and i.find('b') == -1:
-        i='B'
-    else:
-        i=None
-    print(i)
+# for i in a:
+#     x = [item for t in i for item in t]
+        
+#     print(x)
