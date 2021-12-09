@@ -1,0 +1,196 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SEAS{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <h3 class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>Engineering School Revenue and Change Percentage
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <form id="myform" action="view_deptwise_rev_per" method="post">
+        {% csrf_token %}
+        <table class="form-table">
+            <tr>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="sem">Department</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="dept" name="dept"
+                        form="myform" title="Select Department">
+                        {% for i in dept %}
+                        {% if i == dept %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearfrom">Year From</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year1" name="year1"
+                        form="myform" title="Select Year">
+                        {% for i in yearfrom %}
+                        {% if i == year1 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearto">Year To</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year2" name="year2" form="myform" title="Select Year">
+                        {% for i in yearto %}
+                        {% if i == year2 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td style="text-align: center;" class="last-row" colspan="2">
+                    <button class="btn btn-primary">Search</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="row " id="chart">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-body" style="height:600px;">
+                <div class="chart-area">
+                    <canvas id="mixedchart" height="120%"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script> -->
+<script>
+    var search = {{ search }}
+
+    if (search == 1) {
+        document.getElementById("chart").style.display = "none";
+    }
+</script>
+<script>
+
+    var ctx = document.getElementById("mixedchart").getContext("2d");
+    colors = ['#00FFFF', '#A52A2A', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
+    
+    revenue = {{revenue|safe}}
+    revenuelabel={{revenuesemyear|safe}}
+    totalrev={{totalrev|safe}}
+
+
+
+    var data = {
+  labels: revenuelabel,
+  datasets: [
+    {
+      type: 'bar',
+      label: 'Change%',
+      data: revenue,
+      yAxisID: 'revper',
+      borderColor: '#000000',
+      backgroundColor: '#E8496B',
+      
+      //order: 2
+    },
+    {
+       type: 'line',
+      label: 'Total',
+      fill: false,
+      data: totalrev,
+      yAxisID: 'revtotal',
+      borderColor: '#D2FF06',
+      backgroundColor: '#000000',
+      lineTension: 0, 
+        //order: 1
+     },
+           
+        
+  ]
+};
+    
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            title: {
+                display: true
+            },
+            
+            
+            scales: {
+                yAxes: [
+                         {
+                    id: 'revtotal',
+                    type: 'linear',
+                    position: 'right',
+                    ticks: {
+                        //beginAtZero: true,
+                        autoSkip: false,
+                        stepSize: 1000
+                    },
+                    gridLines: {
+                        display:false
+                    },
+                    
+                },
+                    {
+                    id: 'revper',
+                    type: 'linear',
+                    position: 'left',
+                    ticks: {
+                        //beginAtZero: true,
+                        stepSize: 20
+                    },
+                    
+                },
+           
+            ],
+                xAxes: [{
+                    barPercentage: 0.4,
+                    ticks: {
+                        autoSkip: false
+                    },
+                }],
+            },
+
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+    
+
+</script>
+
+
+
+{% endblock javascripts %}

@@ -31,4 +31,12 @@ urlpatterns = [
          views.view_enrolment_course_school, name='view_enrolment_course_school'),
     path('view_revenue_of_iub',
          views.view_revenue_of_iub, name='view_revenue_of_iub'),
+    path('view_rev_change',
+         views.view_rev_change, name='view_rev_change'),
+    path('view_sets_rev',
+         views.view_sets_rev, name='view_sets_rev'),
+    path('view_deptwise_rev_per',
+         views.view_deptwise_rev_per, name='view_deptwise_rev_per'),
+    path('view_enrolment_details',
+         views.view_enrolment_details, name='view_enrolment_details'),
 ]
