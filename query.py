@@ -218,7 +218,7 @@ def details_enrollment(School, Sem, Year):
         cursor.execute('''
         SELECT SectionEnrolled, COUNT(*) AS SBE
         FROM joinedtable 
-        WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year = {} AND SectionEnrolled BETWEEN 1 AND 100 
+        WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year = {} AND SectionEnrolled BETWEEN 1 AND 70 
         GROUP BY SectionEnrolled
         HAVING SectionEnrolled > 0
         ORDER BY SectionEnrolled ASC;
@@ -244,13 +244,28 @@ def iub_revenue(Yearfrom, Yearto, School):
         '''.format(Yearfrom, Yearto, School))
 
         col = cursor.fetchall()
-        # t1 = []
-        # t2 = []
-        # t3 = []
-        # for i in col:
-        #     #e = [item for t in i for item in t]
-        #     t1.append[i[0]]
+
     return col
+
+
+def iub_revenue_total(Yearfrom, Yearto):
+    with connection.cursor() as cursor:
+        cursor.execute('''
+        SELECT Year,Semester,SUM(groupbycredit.sum)
+        FROM
+            (
+                SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+                FROM joinedtable
+                WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN {} AND {} AND SchoolTitle_id IN ('SBE', 'SELS', 'SETS', 'SLASS', 'SPPH')
+                GROUP BY Year,Semester,Credithour
+            ) AS groupbycredit
+        GROUP BY Year,Semester
+        ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn");
+        '''.format(Yearfrom, Yearto))
+
+        row = cursor.fetchall()
+
+    return row
 
 
 def SETS_revenue(Yearfrom, Yearto, Dept):

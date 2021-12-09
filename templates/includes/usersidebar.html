@@ -17,24 +17,85 @@
 
       <div class="sidebar-wrapper">
         <ul class="nav">
+
           <li class="{% if 'cls_req' in segment %} active {% endif %}">
             <a href="{% url 'view_classroom_requirement_course_offer' %}">
               <i class="tim-icons icon-chart-pie-36"></i>
               <p>Classroom Requirement</p>
             </a>
           </li>
+
           <li class="{% if 'enroll' in segment %} active {% endif %}">
             <a href="{% url 'view_enrolment_course_school' %}">
-              <i class="tim-icons icon-chart-pie-36"></i>
+              <i class="tim-icons icon-chart-bar-32"></i>
               <p>Enrollment wise Course</p>
             </a>
           </li>
-          <li class="{% if 'rev' in segment %} active {% endif %}">
-            <a href="{% url 'view_revenue_of_iub' %}">
-              <i class="tim-icons icon-chart-pie-36"></i>
-              <p>Revenue of IUB</p>
+
+          <li class="{% if 'details' in segment %} active {% endif %}">
+            <a href="{% url 'view_enrolment_details' %}">
+              <i class="tim-icons icon-notes"></i>
+              <p>Details Enrollment Table</p>
             </a>
           </li>
+          
+
+      <li class="{% if 'rev' == segment %} active {% endif %}">
+        <a data-toggle="collapse" href="#revenueiub">
+          <i class="tim-icons icon-bank"></i>
+          <p>Revenue of IUB
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse" id="revenueiub">
+          <ul class="nav">
+            <li>
+              <a href="{% url 'view_revenue_of_iub' %}">
+                <span class="sidebar-mini-icon">C</span>
+                <span class="sidebar-normal">Revenue of the schools</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'view_rev_change' %}">
+                <span class="sidebar-mini-icon">T</span>
+                <span class="sidebar-normal">IUB Revenue and Change %</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+
+
+
+      <li class="{% if 'sets' == segment %} active {% endif %}">
+        <a data-toggle="collapse" href="#revenuesets">
+          <i class="tim-icons icon-vector"></i>
+          <p>Engineering School Revenue
+            <b class="caret"></b>
+          </p>
+        </a>
+        <div class="collapse" id="revenuesets">
+          <ul class="nav">
+            <li>
+              <a href="{% url 'view_sets_rev' %}">
+                <span class="sidebar-mini-icon">C</span>
+                <span class="sidebar-normal">Department wise revenue</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'view_deptwise_rev_per' %}">
+                <span class="sidebar-mini-icon">C</span>
+                <span class="sidebar-normal"> Revenue and Change %</span>
+              </a>
+            </li>
+  
+          </ul>
+        </div>
+      </li>
+
+
+      
+
 
           <!-- your sidebar here -->
         </ul>

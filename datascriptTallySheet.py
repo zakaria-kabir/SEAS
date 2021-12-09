@@ -36,6 +36,15 @@ def populatedata(sem, year):
     school5.save()
 
 
+#Room_T
+    #df = df.drop_duplicates(subset=["ROOM_ID"])
+    dfroom = df[["ROOM_ID", "ROOM_CAPACITY"]]
+    data = dfroom.values.tolist()
+    for i in data[0:]:
+        if pd.isna(i[0]) == False:
+            room = Room_T(RoomID=i[0], RoomCapacity=i[1])
+            room.save()
+
 # #Department_T
 #     #datascriptRevenue
 
