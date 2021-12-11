@@ -1,0 +1,167 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SEAS{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
+
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <h3 class="card-title"><i class="tim-icons icon-single-copy-04 text-primary"></i>Usage of the Resources
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <form id="myform" action="view_usage_resource" method="post">
+        {% csrf_token %}
+        <table class="form-table">
+            <tr>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="sem">Semester</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="sem" name="sem"
+                        form="myform" title="Select Semester" multiple>
+                        {% for i in semesters %}
+                        {% if i == sem %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="year">Year</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year" name="year" form="myform" title="Select Year">
+                        {% for i in years %}
+                        {% if i == year %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td style="text-align: center;" class="last-row" colspan="2">
+                    <button class="btn btn-primary">Search</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+
+
+<div class="row mt-4" id ="table1">
+      <div class="col-12">
+          <div class="card card-chart">
+          <div class="card-body">
+            <table class="table table-bordered table-striped " style="text-align: center;">
+               <thead style="background-color:#007FFF;">
+                <th colspan="6" style="background-color:#66abe4">
+                    <h4>{{selectedsem }} &#x2935;</h4>
+                </th>
+                    <tr>
+                        <th></th>
+                      <th>Sum</th>
+                      <th>Avg Enroll </th>
+                      <th>Avg Room</th>
+                      <th>Difference </th>
+                      <th>Unused %</th>
+                    </tr>
+               </thead>
+                <tbody style="font-size: larger;">
+                   {% for c in table%}
+                                <tr>
+                                    {% for e  in c %}
+                                        <td class="value">{{ e }}</td>
+                                    {% endfor %}
+                                </tr>
+                    {% endfor %}
+               </tbody>
+
+                    </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="row mt-4" id="table">
+  <div class="col-12">
+    <div class="card card-chart">
+      <div class="card-body">
+        <table
+          class="table table-bordered table-striped"
+          style="text-align: center" id="tableId"
+        >
+          <thead style="background-color: #007fff">
+            <!-- <th colspan="{{rowsize}}" style="background-color:#66abe4">
+                    <h4>{{selectedsem}}</h4>
+                </th> -->
+            <tr>
+              <th></th>
+              {% for c in semfort2%}
+              <th>{{ c }} {{selectedyear}}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody style="font-size: larger">
+            {% for c in table2%}
+            <tr>
+              {% for e in c %}
+              <td class="value1">{{ e }}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+            <script>
+                var l = document.getElementById("tableId").rows[0].cells.length;
+                // https://www.w3schools.com/jsref/coll_table_cells.asp
+
+                let val = document.querySelectorAll('.value1');
+                for (let i = val.length-1; i > val.length-l ; i--) {
+                    if (val[i].textContent > 30)
+                        val[i].style = 'color: red ! important;';
+                }
+
+
+            </script>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    var search = {{ search }}
+
+    if (search == 1) {
+        document.getElementById("table1").style.display = "none";
+        document.getElementById("table").style.display = "none";
+    }
+</script>
+
+
+{% endblock javascripts %}
+
+

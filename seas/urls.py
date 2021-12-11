@@ -23,7 +23,8 @@ from django.contrib.auth.views import LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', views.loginview, name='loginpage'),
-    path('', views.homeview, name='home'),
+    path('logout', views.logoutview, name='logoutpage'),
+    path('', views.homeview, name='loginpage'),
 
     path('view_classroom_requirement_course_offer',
         views.view_classroom_requirement_course_offer, name='view_classroom_requirement_course_offer'),
@@ -39,4 +40,11 @@ urlpatterns = [
          views.view_deptwise_rev_per, name='view_deptwise_rev_per'),
     path('view_enrolment_details',
          views.view_enrolment_details, name='view_enrolment_details'),
+    path('view_usage_resource',
+         views.view_usage_resource, name='view_usage_resource'),
+    path('view_availabilityvscourse_offer',
+         views.view_availabilityvscourse_offer, name='view_availabilityvscourse_offer'),
+    path('view_iub_resources',
+         views.view_iub_resources, name='view_iub_resources'),
+
 ]

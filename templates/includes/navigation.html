@@ -13,7 +13,11 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="javascript:void(0)"><h2>Student Enrollment Analysis System</h2> </a>
+            <a class="navbar-brand" href="javascript:void(0)"><h1 style="margin-bottom: 0px; 
+  background: -webkit-linear-gradient(rgb(90, 96, 102), rgb(255, 255, 255));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+">Student Enrollment Analysis System</h1> </a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -24,6 +28,7 @@
 
 
             <ul class="navbar-nav ml-auto">
+              <p class="navbar-text">{{request.user.get_full_name}} <br><small>{{user.groups.all.0}}</small></p>
               <li class="dropdown nav-item">
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <div class="photo">
@@ -36,7 +41,7 @@
                   </p>
                 </a>
                 <ul class="dropdown-menu dropdown-navbar">
-                  <li class="nav-link"><a href="#" class="nav-item dropdown-item">Log out</a></li>
+                  <li class="nav-link"><a href="{% url 'logoutpage' %}" class="nav-item dropdown-item"><i class="tim-icons icon-button-power"></i>Log Out</a></li>
                 </ul>
               </li>
               <li class="separator d-lg-none"></li>
