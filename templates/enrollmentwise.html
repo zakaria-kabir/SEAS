@@ -71,10 +71,8 @@
         </table>
     </form>
 </div>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+
+
 <div class="row " id="chart">
     <div class="col-12">
         <div class="card card-chart">
@@ -87,6 +85,45 @@
     </div>
 </div>
 
+
+<div class="row mt-4" id ="table">
+      <div class="col-12">
+          <div class="card card-chart">
+          <div class="card-body">
+            <table class="table table-bordered table-striped " style="text-align: center;">
+               <thead style="background-color:#007FFF;">
+                <th colspan="{{rowsize}}" style="background-color:#66abe4">
+                    <h4>{{selectedsem}}</h4>
+                </th>
+                    <tr>
+                      <th>Enrollment</th>
+                      {% for c in selectedschool%}
+                      <th>{{ c }}</th>     
+                      {% endfor %}
+                      <th>Total</th>
+                    </tr>
+               </thead>
+               <tbody style="font-size: larger;">
+                   {% for c in table%}
+                                <tr>
+                                    {% for e  in c %}
+                                        <td class="value">{{ e }}</td>
+                                    {% endfor %}
+                                </tr>
+                    {% endfor %}
+               </tbody>
+
+                    </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+
 {% endblock content %}
 
 
@@ -97,6 +134,7 @@
 
     if (search == 1) {
         document.getElementById("chart").style.display = "none";
+        document.getElementById("table").style.display = "none";
     }
 </script>
 <script>

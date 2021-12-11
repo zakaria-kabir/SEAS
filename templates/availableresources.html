@@ -1,0 +1,66 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SEAS{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
+
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <h3 class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>IUB available resources
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-4" id="table">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-body">
+                <table class="table table-bordered table-striped " style="text-align: center;">
+                    <thead style="background-color:hsl(251, 100%, 50%);">
+                        <th colspan='3' style="background-color:#66abe4">
+                            <h4>IUB available resources</h4>
+                        </th>
+                        <tr>
+                            <th>Class Size</th>
+                            <th>IUB Resource</th>
+                            <th>Capacity</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: larger;">
+                        {% for c in table%}
+                        <tr>
+                            {% for e in c %}
+                            <td class="value">{{ e }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+
+{% endblock javascripts %}

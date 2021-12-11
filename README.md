@@ -9,7 +9,8 @@
         -> go
  2. Create a Database
         Database name: seas
- 3. open a ternimal in roon directory:
+ 3. open model.py script in vs code. 
+        run:
         python manage.py migrate
  4. open PopulationScriptMain.py
         click run.
@@ -17,6 +18,4 @@
  6. Now you can do stuffs.
  7. To run project:
         python manage.py runserver
-        
- 8. go http://127.0.0.1:8000/login
         

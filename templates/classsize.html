@@ -64,6 +64,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script> -->
+
+
+
 <div class="row mt-0.5" id="chart">
     <div class="col-12">
         <div class="card card-chart">
@@ -105,6 +108,39 @@
     </div>
 </div>
 
+
+<div class="row mt-4" id ="table">
+      <div class="col-12">
+          <div class="card card-chart">
+          <div class="card-body">
+            <table class="table table-bordered table-striped " style="text-align: center;">
+               <thead style="background-color:#007FFF;">
+                <th colspan="4" style="background-color:#66abe4">
+                    <h4>{{selectedsem}}</h4>
+                </th>
+                    <tr>
+                      <th>Class Size</th>
+                      <th>Sections</th>
+                      <th>Class room 6 </th>
+                      <th>Class room 7 </th>
+                    </tr>
+               </thead>
+               <tbody style="font-size: larger;">
+                   {% for c in table%}
+                                <tr>
+                                    {% for e  in c %}
+                                        <td class="value">{{ e }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+               </tbody>
+
+                    </table>
+          </div>
+      </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 
@@ -116,6 +152,7 @@
 
     if (search == 1) {
         document.getElementById("chart").style.display = "none";
+        document.getElementById("table").style.display = "none";
     }
 </script>
 
@@ -128,7 +165,7 @@
         class7 = {{ class7 | safe }}
         sections ={{ sections | safe}}
         
-        var originaldata = {
+    var originaldata = {
             labels: ['1-10', '11-20', '21-30', '31-35', '36-40', '41-50', '51-55', '56-65'],
             datasets: [
                 {
@@ -172,8 +209,7 @@
     document.getElementById('whatisshowing').innerHTML = 'Number of Sections';
     $("#0").click(function () {
         document.getElementById('whatisshowing').innerHTML = 'Class 6';
-        var datasetlist2 = []
-            datasetlist2={
+        var datasetlist2={
                 labels: ['1-10', '11-20', '21-30', '31-35', '36-40', '41-50', '51-55', '56-65'],
                 datasets: [
                     {
@@ -194,8 +230,7 @@
 
     $("#1").click(function () {
         document.getElementById('whatisshowing').innerHTML = 'Class 7';
-            var datasetlist2 = []
-            datasetlist2 = {
+            var datasetlist2 = {
                 labels: ['1-10', '11-20', '21-30', '31-35', '36-40', '41-50', '51-55', '56-65'],
                 datasets: [
                     {

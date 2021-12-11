@@ -21,17 +21,19 @@ Room_T.objects.all().delete()
 Section_T.objects.all().delete()
 
 # Reading data from revenue excel
-dft1 = tallysheet.populatedata('Autumn', '2020')
-dft2 = tallysheet.populatedata('Autumn', '2021')
-dft3 = tallysheet.populatedata('Spring', '2020')
-dft4 = tallysheet.populatedata('Spring', '2021')
-dft5 = tallysheet.populatedata('Summer', '2021')
+dft1 = tallysheet.populatedata('Spring', '2021')
+dft2 = tallysheet.populatedata('Summer', '2021')
 dfr = rev.populate('Revenue.xlsx', 'Data')
+dft4 = tallysheet.populatedata('Autumn', '2020')
+dft3 = tallysheet.populatedata('Autumn', '2021')
+dft5 = tallysheet.populatedata('Spring', '2020')
+
+
 
 dfr = dfr.rename(columns={"RoomSize": "ROOM_CAPACITY",
                  "Sec": "SECTION", "CourseID": "COFFER_COURSE_ID", "stuNo": "ENROLLED", "Crs": "CREDIT_HOUR", "size": "CAPACITY"})
 
-dataframes=[dft1,dft2,dft3,dft4,dft5,dfr]
+dataframes = [dft1, dft2, dfr,dft3, dft4, dft5]
 dfconcat = pd.concat(dataframes)
 dfconcat = dfconcat.astype(object).where(pd.notnull(dfconcat), None)
 

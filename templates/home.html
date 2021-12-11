@@ -5,10 +5,13 @@
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
+
 {% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
 
-{% block content %}
 
+
+
+{% block content %}
 <div class="row">
     <div class="col-12" style="display: flex;
   justify-content: center;
@@ -19,5 +22,94 @@
 </div>
 
 
+
+<div class="row mt-0.5" id="chart">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+               
+            </div>
+            <div class="card-body" style="height:300px;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 {% endblock content %}
 
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    var search = {{ search }}
+
+    if (search == 1) {
+        document.getElementById("chart").style.display = "none";
+        document.getElementById("table").style.display = "none";
+    }
+</script>
+
+<script>
+    var ctx = document.getElementById("barchart").getContext("2d");
+    colors = ['#FF8300', '#1BE110', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
+
+
+    chartlabel = {{ chartlabel | safe }}
+    chartdata = {{ chartdata | safe }}
+    selectedsem = {{ selectedsem | safe }}
+    resource = {{ resource | safe }}
+    var chatdata = []
+    var originaldata2 = {
+        type: 'bar',
+        //fill: false,
+        label: "IUB Resources",
+        data: resource,
+        backgroundColor: '#1D76D7',
+
+
+    }
+    chatdata.push(originaldata2);
+
+    for (var i = 0; i < selectedsem.length; i++) {
+        var originaldata = {
+            type: 'bar',
+            label: selectedsem[i],
+            data: chartdata[i],
+            backgroundColor: colors[i],
+
+        };
+        chatdata.push(originaldata);
+    }
+
+    var data = {
+        labels: chartlabel,
+        datasets: chatdata
+
+    };
+    //console.log(chatdata);
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            title: {
+                display: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                    },
+                    type: 'linear',
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
+
+</script>
+
+{% endblock javascripts %}
