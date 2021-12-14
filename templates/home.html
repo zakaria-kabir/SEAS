@@ -16,21 +16,41 @@
     <div class="col-12" style="display: flex;
   justify-content: center;
   align-items: center;">
-        <h2>Select From Left menu</h2>
+        <h1 style="background: -webkit-linear-gradient(rgb(236, 86, 199), rgb(86, 165, 255));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;">&#11013;Select From Left menu</h1>
     </div>
 
 </div>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&display=swap" rel="stylesheet">
 
 
 <div class="row mt-0.5" id="chart">
     <div class="col-12">
         <div class="card card-chart">
-            <div class="card-header ">
-               
-            </div>
-            <div class="card-body" style="height:300px;">
+            <div class="card-body" style="height:400px;">
+                <p class="dashtext">The project's goal is to develop a system for stakeholders and
+                institutional bodies to retrieve statistical data on school-level revenue analysis,
+                classroom requirement analysis based on class slot, classroom allocation
+                recommendations based on IUB best resource utilization, and IUB resource
+                analysis.
+                </p>
+                <style>
+                    .dashtext{
+                        text-align: center;
+                        padding: 10%;
+                        padding-top: 5%;
+                        /* margin-top: 7%; */
+                        font-size: 1.6rem;
+                        font-family: 'Baloo Bhaijaan 2', cursive;
+                          background: -webkit-linear-gradient(rgba(255, 87, 213, 0.589), rgb(255, 255, 255));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
 
+                </style>
             </div>
         </div>
     </div>
@@ -54,62 +74,7 @@
 
 <script>
     var ctx = document.getElementById("barchart").getContext("2d");
-    colors = ['#FF8300', '#1BE110', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
-
-
-    chartlabel = {{ chartlabel | safe }}
-    chartdata = {{ chartdata | safe }}
-    selectedsem = {{ selectedsem | safe }}
-    resource = {{ resource | safe }}
-    var chatdata = []
-    var originaldata2 = {
-        type: 'bar',
-        //fill: false,
-        label: "IUB Resources",
-        data: resource,
-        backgroundColor: '#1D76D7',
-
-
-    }
-    chatdata.push(originaldata2);
-
-    for (var i = 0; i < selectedsem.length; i++) {
-        var originaldata = {
-            type: 'bar',
-            label: selectedsem[i],
-            data: chartdata[i],
-            backgroundColor: colors[i],
-
-        };
-        chatdata.push(originaldata);
-    }
-
-    var data = {
-        labels: chartlabel,
-        datasets: chatdata
-
-    };
-    //console.log(chatdata);
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: {
-            title: {
-                display: true
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                    type: 'linear',
-                }]
-            },
-            responsive: true,
-            maintainAspectRatio: true
-        }
-    });
-
+    
 </script>
 
 {% endblock javascripts %}

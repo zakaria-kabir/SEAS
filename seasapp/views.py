@@ -384,7 +384,7 @@ def view_revenue_table_of_iub(request):
         yeart = request.POST.get('year2')
         print(school, yearf, yeart)
         revenue = []
-        rowsize=3+len(school)
+        rowsize=len(school)
         for i in school:
             revenue.append(iub_revenue(yearf, yeart, i))
         # print(revenue)
@@ -1023,3 +1023,98 @@ def view_iub_resources(request):
         'table':table,
         'segment': 'usage',
     })
+
+#####################################################################################################################################
+
+
+def view_engr_school_rev(request):
+    if request.method == 'POST':
+        dept = request.POST.getlist('dept')
+        yearf = request.POST.get('year1')
+        yeart = request.POST.get('year2')
+        print(dept, yearf, yeart)
+        revenue = []
+        for i in dept:
+           revenue.append(SETS_revenue(yearf,yeart,i))
+
+        a = abs(int(yearf)-int(yeart))+1
+        # print(type(a))
+
+        list1 = []
+        list2 = []
+        list3 = []
+        total = []
+
+        for j in revenue:
+            for i in j:
+                list1.append(str(i[0])+i[1])
+                list2.append(int(i[2]))
+        list1 = list(dict.fromkeys(list1))
+        list2 = [list2[i:i+a*3] for i in range(0, len(list2), a*3)]
+
+        list3 = np.transpose(list2)
+        total = list3.sum(axis=1).tolist()
+        change = []
+        for i in range(len(list2)):
+            change1 = [0,0,0]
+            for j in range(len(list2[i])-3):
+                change1.append(int(((list2[i][j+3]-list2[i][j])/list2[i][j+3])*100))
+            change.append(change1)
+        changet=[0,0,0]
+        for i in range(len(total)-3):
+            changet.append(int(((total[i+3]-total[i])/total[i+3])*100))        
+        change.append(changet)
+
+        finaltemp1=np.transpose(change)
+
+        list2.append(total)
+        finaltemp2=np.transpose(list2)
+
+        finaltemp3=np.concatenate((finaltemp2,finaltemp1),axis=1)
+
+
+        finaltable = np.c_[list1, finaltemp3]
+        tablehead=[]
+        # for i in range(len(dept)*2+2):
+        #     if i<len(dept):
+        #         print(i)
+        #         tablehead.append(dept[i])
+        #     elif i==len(dept):
+        #         print(i)
+        #         tablehead.append("SETS")
+        #     elif i > len(dept) and i < len(dept)*2+1:
+        #         print(i)
+        #         tablehead.append(dept[i-len(dept)-1]+"%")
+        #     else:
+        #         print(i)
+        #         tablehead.append("SETS%")
+        for i in range(len(dept)):
+            tablehead.append(dept[i])
+        tablehead.append("SETS")
+        for i in range(len(dept)):
+            tablehead.append(dept[i]+"%")
+        tablehead.append("SETS%")
+
+
+        print(tablehead)
+        return render(request, 'setsrevtable.html', {
+            'dept': SETSdeptList,
+            'yearfrom': yearlist,
+            'yearto': yearlist,
+            'yearf': yearf,
+            'yeart': yeart,
+            'table': finaltable,
+            'selecteddept':dept,
+            'tablehead': tablehead,
+            'search': 0,
+            'segment': 'sets',
+        })
+
+    else:
+        return render(request, 'setsrevtable.html', {
+            'dept': SETSdeptList,
+            'yearfrom': yearlist,
+            'yearto': yearlist,
+            'search': 1,
+            'segment': 'sets',
+        })

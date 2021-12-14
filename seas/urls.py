@@ -48,6 +48,8 @@ urlpatterns = [
          views.view_availabilityvscourse_offer, name='view_availabilityvscourse_offer'),
     path('view_iub_resources',
          views.view_iub_resources, name='view_iub_resources'),
+    path('view_engr_school_rev',
+         views.view_engr_school_rev, name='view_engr_school_rev'),
     
 
 ]
