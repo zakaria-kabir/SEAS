@@ -327,3 +327,15 @@ ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn")) AS NOTHING
 ON S.Semseter = N.Semester) AS EVERYTHING
 
 
+-- ==================Total revenue cal======
+ SELECT Year,Semester,SUM(groupbycredit.sum)
+        FROM
+            (
+                SELECT COUNT(*),credithour, SUM( SectionEnrolled), credithour*SUM( SectionEnrolled) AS sum, Semester,year
+                FROM joinedtable
+                WHERE Semester IN ("Spring","AUTUMN","SUMMER") AND Year BETWEEN 2009 AND 2021 AND SchoolTitle_id IN ("SBE", "SLASS", "SETS", "SELS", "SPPH")
+                GROUP BY Year,Semester,Credithour
+            ) AS groupbycredit
+        GROUP BY Year,Semester
+        ORDER BY Year, FIELD (Semester,"Spring","Summer","Autumn");
+
