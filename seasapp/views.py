@@ -15,10 +15,10 @@ import numpy as np
 
 # Create your views here.
 semesterlist = ["Spring", "Summer", "Autumn"]
-# yearlist = [2009, 2010, 2011, 2012, 2013, 2014,
-#             2015, 2016, 2017, 2018, 2019, 2020, 2021]
-yearlist = [2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014,
-            2013, 2012, 2011, 2010, 2009]
+yearlist = [2009, 2010, 2011, 2012, 2013, 2014,
+            2015, 2016, 2017, 2018, 2019, 2020, 2021]
+# yearlist = [2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014,
+#             2013, 2012, 2011, 2010, 2009]
 schoolList = ['SBE', 'SELS', 'SETS', 'SLASS', 'SPPH']
 SETSdeptList = ['CSE', 'EEE', 'PhySci']
 ##############################################################################################################################
@@ -368,6 +368,79 @@ def view_rev_change(request):
 
     else:
         return render(request, 'revenuechange.html', {
+            'yearfrom': yearlist,
+            'yearto': yearlist,
+            'search': 1,
+            'segment': 'rev',
+        })
+
+###############################################################################################################################
+
+
+def view_revenue_table_of_iub(request):
+    if request.method == 'POST':
+        school = request.POST.getlist('scl')
+        yearf = request.POST.get('year1')
+        yeart = request.POST.get('year2')
+        print(school, yearf, yeart)
+        revenue = []
+        rowsize=3+len(school)
+        for i in school:
+            revenue.append(iub_revenue(yearf, yeart, i))
+        # print(revenue)
+        a = abs(int(yearf)-int(yeart))+1
+        # print(type(a))
+        
+        list1 = []
+        list2 = []
+        list3 = []
+        total = []
+
+        for j in revenue:
+            for i in j:
+                list1.append(str(i[0])+i[1])
+                list2.append(int(i[2]))
+        list1 = list(dict.fromkeys(list1))
+        list2 = [list2[i:i+a*3] for i in range(0, len(list2), a*3)]
+        #add missing spph to make col same for matrix
+        if "SPPH" in school:           
+            index=school.index("SPPH")
+            dif = len(list1) - len(list2[index])
+            if dif==1:
+                list2[index].insert(1,0)
+            if dif==2:
+                list2[index].insert(1,0)
+                list2[index].insert(4, 0)
+            if dif == 3:
+                list2[index].insert(1, 0)
+                list2[index].insert(4, 0)
+                list2[index].insert(7, 0)
+        list3=np.transpose(list2)
+        total = list3.sum(axis=1).tolist()
+        change=[0,0,0]
+        for i in range(len(total)-3):
+            change.append(int(((total[i+3]-total[i])/total[i+3])*100))
+        list2.append(total)
+        list2.append(change)
+        list2 = np.transpose(list2)
+        finaltable = np.c_[list1, list2]
+        print(finaltable)
+        return render(request, 'revenuetableiub.html', {
+            'schools': schoolList,
+            'yearfrom': yearlist,
+            'yearto': yearlist,
+            'selectedschool': school,
+            'yearf':yearf,
+            'yeart':yeart,
+            'table': finaltable,
+            'rowsize':rowsize,
+            'search': 0,
+            'segment': 'rev',
+        })
+
+    else:
+        return render(request, 'revenuetableiub.html', {
+            'schools': schoolList,
             'yearfrom': yearlist,
             'yearto': yearlist,
             'search': 1,

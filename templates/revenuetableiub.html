@@ -1,0 +1,137 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} SEAS{% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+
+{% block sidebar %} {% include 'includes/usersidebar.html' %} {% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-header ">
+                <h3 class="card-title"><i class="tim-icons icon-chart-pie-36 text-primary"></i>Revenue of IUB
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <form id="myform" action="view_revenue_table_of_iub" method="post">
+        {% csrf_token %}
+        <table class="form-table">
+            <tr>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="sem">School</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="scl" name="scl"
+                        form="myform" title="Select School" multiple>
+                        {% for i in schools %}
+                        {% if i == scl %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearfrom">Year From</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year1" name="year1"
+                        form="myform" title="Select Year">
+                        {% for i in yearfrom %}
+                        {% if i == year1 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td class="form-field" style="padding-right:30px;">
+                    <label style="padding-right:5px;" for="yearto">Year To</label>
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year2" name="year2"
+                        form="myform" title="Select Year">
+                        {% for i in yearto %}
+                        {% if i == year2 %}
+                        <option value="{{i}}" selected="selected">{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </td>
+                <td style="text-align: center;" class="last-row" colspan="2">
+                    <button class="btn btn-primary">Search</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="row mt-4" id="table">
+    <div class="col-12">
+        <div class="card card-chart">
+            <div class="card-body">
+                <table class="table table-bordered table-striped " style="text-align: center;">
+                    <thead style="background-color:#007FFF;">
+                        <th colspan="{{rowsize}}" style="background-color:#66abe4">
+                            <h4>The raw data of</h4>
+                        </th>
+                        <tr>
+                            <th>Semesters</th>
+                            {% for c in selectedschool%}
+                            <th>{{ c }}</th>
+                            {% endfor %}
+                            <th>Total</th>
+                            <th>Change%</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: larger;">
+                        {% for c in table%}
+                        <tr>
+                            {% for e in c %}
+                            <td class="value">{{ e }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    var search = {{ search }}
+
+    if (search == 1) {
+        document.getElementById("chart").style.display = "none";
+    }
+</script>
+<script>
+
+    var ctx = document.getElementById("linechart").getContext("2d");
+    colors = ['#00FFFF', '#A52A2A', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
+
+    revenue = {{ revenue | safe }}
+    revenuelabel = {{ revenuesemyear | safe }}
+    selectedschool = {{ selectedschool | safe }}
+
+
+
+</script>
+
+
+
+{% endblock javascripts %}

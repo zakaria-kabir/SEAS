@@ -34,6 +34,8 @@ urlpatterns = [
          views.view_revenue_of_iub, name='view_revenue_of_iub'),
     path('view_rev_change',
          views.view_rev_change, name='view_rev_change'),
+    path('view_revenue_table_of_iub',
+         views.view_revenue_table_of_iub, name='view_revenue_table_of_iub'),
     path('view_sets_rev',
          views.view_sets_rev, name='view_sets_rev'),
     path('view_deptwise_rev_per',
@@ -46,5 +48,6 @@ urlpatterns = [
          views.view_availabilityvscourse_offer, name='view_availabilityvscourse_offer'),
     path('view_iub_resources',
          views.view_iub_resources, name='view_iub_resources'),
+    
 
 ]
