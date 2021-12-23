@@ -76,3 +76,8 @@ class Section_T(models.Model):
 
     def __str__(self):
         return str(self.SectionNum)
+
+class uploadedfiles(models.Model):
+    File_to_upload = models.FileField(upload_to='Resources/')
+
+

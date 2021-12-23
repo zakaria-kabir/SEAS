@@ -1,16 +1,21 @@
 from django.http import request
 from django.http.response import HttpResponseRedirect
+from seasapp.models import *
 import numpy as np
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from numpy.lib.function_base import diff
+from seas.settings import BASE_DIR
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
 from query import *
-from seasapp.models import *
+from seasapp.forms import *
 from operator import itemgetter
 import numpy as np
+from subprocess import run
+import sys
+from os import walk
 
 
 # Create your views here.
@@ -23,6 +28,29 @@ schoolList = ['SBE', 'SELS', 'SETS', 'SLASS', 'SPPH']
 SETSdeptList = ['CSE', 'EEE', 'PhySci']
 ##############################################################################################################################
 
+@login_required(login_url="/login/")
+def uploadfunc(request):
+	if request.method == 'POST':
+		form = uploadfileform(request.POST or None, request.FILES or None)
+		if form.is_valid():
+			form.save()
+	else:
+		form = uploadfileform()
+	return render(request, 'home.html', {'form': form})
+
+#####################################################################################################
+def runpopulationscript(request):
+    path = str(BASE_DIR)+"//Scripts//PopulationScript.py"
+    filepath = str(BASE_DIR)+"//media//Resources"
+    filenameslist = next(walk(filepath), (None, None, []))[2]
+    listToStr = ' '.join([str(elem) for elem in filenameslist])
+    run([sys.executable, path, listToStr, filepath], shell=True)
+    
+    return render(request, 'home.html', {'data1': "DB updated"})
+    
+#https://stackoverflow.com/questions/31529421/weird-output-value-bvalue-r-n-python-serial-read
+#https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
+#############################################################################################################################
 
 def loginview(request):
     form = LoginForm(request.POST or None)

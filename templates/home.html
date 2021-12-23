@@ -30,27 +30,118 @@
 <div class="row mt-0.5" id="chart">
     <div class="col-12">
         <div class="card card-chart">
-            <div class="card-body" style="height:400px;">
+            <div class="card-body" style="height:500px;">
                 <p class="dashtext">The project's goal is to develop a system for stakeholders and
-                institutional bodies to retrieve statistical data on school-level revenue analysis,
-                classroom requirement analysis based on class slot, classroom allocation
-                recommendations based on IUB best resource utilization, and IUB resource
-                analysis.
+                    institutional bodies to retrieve statistical data on school-level revenue analysis,
+                    classroom requirement analysis based on class slot, classroom allocation
+                    recommendations based on IUB best resource utilization, and IUB resource
+                    analysis.
                 </p>
+                <p class="dashtext2">
+                    Click the "upload file" to upload new file. Please upload file in </p>
+                    <p class="dashtext3" > "Tally Sheet For Semestername Year.xlsx"</p>
+                    <p class="dashtext2"> OR</p>
+                   <p class="dashtext3"> "Revenue.xlsx" </p>
                 <style>
-                    .dashtext{
+                    .dashtext {
                         text-align: center;
                         padding: 10%;
-                        padding-top: 5%;
+                        padding-top: 2%;
+                        padding-bottom: 0;
                         /* margin-top: 7%; */
-                        font-size: 1.6rem;
+                        font-size: 1.1rem;
                         font-family: 'Baloo Bhaijaan 2', cursive;
-                          background: -webkit-linear-gradient(rgba(255, 87, 213, 0.589), rgb(255, 255, 255));
+                        background: -webkit-linear-gradient(rgba(255, 87, 213, 0.589), rgb(255, 255, 255));
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
                     }
-
+                     .dashtext2 {
+                        text-align: center;
+                        padding: 10%;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        margin: 0;
+                        font-size: 1.15rem;
+                        font-family: 'Baloo Bhaijaan 2', cursive;
+                        background: -webkit-linear-gradient(rgb(60, 200, 255), rgb(255, 255, 255));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
+                    .dashtext3 {
+                        text-align: center;
+                        padding: 10%;
+                        padding-top: 0;
+                        padding-bottom: 0;
+                        margin: 0;
+                        font-size: 1.3rem;
+                        font-family: 'Baloo Bhaijaan 2', cursive;
+                        background: -webkit-linear-gradient(rgb(255, 165, 172), rgb(255, 255, 255));
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                    }
                 </style>
+                <div class="container">
+                    <style>
+                        .errorlist {
+                            display: none;
+                        }
+
+                        .container {
+                            text-align: center;
+                        }
+                    </style>
+                    <form method="post" action="{% url 'uploadfunc'%}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_table }}
+                        <!-- <input type="file" name="file_to_upload" required="" id="id_File_to_upload"> -->
+                        <input class="btn btn-primary btn-md" role="button" type="submit" name="submit"
+                            value="Upload File">
+                    </form>
+
+                    <script src="http://code.jquery.com/jquery-latest.js"></script>
+                    <script type="text/javascript">
+                        function clicked(e) {
+                                if (!confirm('Are you sure?')) {
+                                    e.preventDefault();
+                                    $(document).ready(function () {
+                                        $('#script').click(function () {
+                                            $('#label').text("please wait until the current process is finished");
+                                        });
+
+                                    });
+                                }
+                            }
+                    </script>
+                    <p class="dashtext2">
+                        Click the "Click to run Population Script" to Populate The Database.
+                    </p>
+                    Don't click if not necessary <br>
+
+
+                    <label id="label" for="script"></label>
+
+                    <h4 style="margin-bottom: 0;">{{data1}}<h4>
+                            <form action="{% url 'runpopulationscript'%}">
+                                <input id="script" class="btn btn-primary btn-md" type="submit"
+                                    value="Click to run Population Script" onclick="clicked(event)">
+                            </form>
+                </div>
+
+                <!-- <fieldset name="Multiple Files Upload">
+                    {% if msg %} {% autoescape off %} {{ msg }} {% endautoescape %} {% endif %}
+                    <form method="post" action="{% url 'uploadfunc'%}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <dl>
+                            <p>
+                                <label>Browse and select one or more files</label>&nbsp;&nbsp;
+                                <input type="file" name="files" autocomplete="off" required multiple>
+                            </p>
+                        </dl>
+                        <p>
+                            <input type="submit" value="Upload">
+                        </p>
+                    </form>
+                </fieldset> -->
             </div>
         </div>
     </div>
@@ -74,7 +165,7 @@
 
 <script>
     var ctx = document.getElementById("barchart").getContext("2d");
-    
+
 </script>
 
 {% endblock javascripts %}
