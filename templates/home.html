@@ -103,13 +103,14 @@
                         function clicked(e) {
                                 if (!confirm('Are you sure?')) {
                                     e.preventDefault();
-                                    $(document).ready(function () {
-                                        $('#script').click(function () {
-                                            $('#label').text("please wait until the current process is finished");
-                                        });
-
-                                    });
+                                    
                                 }
+                                $(document).ready(function () {
+                                $('#script').click(function () {
+                                    $('#label').text("please wait until the current process is finished");
+                                });
+
+                            });
                             }
                     </script>
                     <p class="dashtext2">
