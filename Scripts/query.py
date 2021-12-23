@@ -1,8 +1,11 @@
 from django.db import connection
 import os
-import django
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "seas.settings")
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+import sys
+sys.path.append(PROJECT_PATH)
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'seas.settings')
+import django
 django.setup()
 from seasapp.models import *
 

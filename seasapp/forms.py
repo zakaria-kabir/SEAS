@@ -32,7 +32,7 @@ class uploadfileform(forms.ModelForm):
         fields = ('File_to_upload',)
 
     def clean(self):
-        file_path = "media/Resources/" + str(self.cleaned_data.get('file_to_upload'))
+        file_path = "media//Resources//" + str(self.cleaned_data.get('File_to_upload'))
         file_path = file_path.replace(" ", "_")
         file_path = file_path.replace("(", "")
         file_path = file_path.replace(")", "")

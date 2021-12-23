@@ -9,7 +9,7 @@ from numpy.lib.function_base import diff
 from seas.settings import BASE_DIR
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
-from query import *
+from Scripts.query import *
 from seasapp.forms import *
 from operator import itemgetter
 import numpy as np

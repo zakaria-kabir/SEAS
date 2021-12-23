@@ -100,18 +100,24 @@
 
                     <script src="http://code.jquery.com/jquery-latest.js"></script>
                     <script type="text/javascript">
+                        // $(document).ready(function () {
+                        //         $('#script').click(function () {
+                        //             $('#label').text("please wait until the current process is finished");
+                        //         });
+
+                        //     });
+
                         function clicked(e) {
+                            
                                 if (!confirm('Are you sure?')) {
                                     e.preventDefault();
-                                    
                                 }
-                                $(document).ready(function () {
-                                $('#script').click(function () {
-                                    $('#label').text("please wait until the current process is finished");
-                                });
-
-                            });
-                            }
+                                else{
+                                    $("label").text("please wait until the current process is finished");
+                                }
+                          
+                                
+                        }
                     </script>
                     <p class="dashtext2">
                         Click the "Click to run Population Script" to Populate The Database.
