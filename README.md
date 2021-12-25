@@ -1,14 +1,13 @@
 # SEAS
 
 ## Student Enrollment Analysis System
-
-### Steps to start working:
-
 The project's goal is to develop a software system for stakeholders and
 institutional bodies to retrieve statistical data on school-level revenue
 analysis, classroom requirement analysis based on class slot, classroom
 allocation recommendations based on IUB best resource utilization, and IUB
 resource calculation.
+
+### Steps to start working:
 
 ## Dependencies
 
