@@ -24,33 +24,38 @@ yearlist = [2009, 2010, 2011, 2012, 2013, 2014,
             2015, 2016, 2017, 2018, 2019, 2020, 2021]
 # yearlist = [2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014,
 #             2013, 2012, 2011, 2010, 2009]
-schoolList = ['SBE', 'SELS', 'SETS', 'SLASS', 'SPPH']
+# schoolList = ['SBE', 'SELS', 'SETS', 'SLASS', 'SPPH']
+schoolList = list(School_T.objects.all().values_list('SchoolTitle', flat=True))
 SETSdeptList = ['CSE', 'EEE', 'PhySci']
 ##############################################################################################################################
 
+
 @login_required(login_url="/login/")
 def uploadfunc(request):
-	if request.method == 'POST':
-		form = uploadfileform(request.POST or None, request.FILES or None)
-		if form.is_valid():
-			form.save()
-	else:
-		form = uploadfileform()
-	return render(request, 'home.html', {'form': form})
+    if request.method == 'POST':
+        form = uploadfileform(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+    else:
+        form = uploadfileform()
+    return render(request, 'home.html', {'form': form})
 
 #####################################################################################################
+
+
 def runpopulationscript(request):
     path = str(BASE_DIR)+"//Scripts//PopulationScript.py"
     filepath = str(BASE_DIR)+"//media//Resources"
     filenameslist = next(walk(filepath), (None, None, []))[2]
     listToStr = ' '.join([str(elem) for elem in filenameslist])
     run([sys.executable, path, listToStr, filepath], shell=False)
-    
+
     return render(request, 'home.html', {'data1': "DB updated"})
-    
-#https://stackoverflow.com/questions/31529421/weird-output-value-bvalue-r-n-python-serial-read
-#https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
+
+# https://stackoverflow.com/questions/31529421/weird-output-value-bvalue-r-n-python-serial-read
+# https://stackoverflow.com/questions/3207219/how-do-i-list-all-files-of-a-directory
 #############################################################################################################################
+
 
 def loginview(request):
     form = LoginForm(request.POST or None)
@@ -106,18 +111,18 @@ def view_classroom_requirement_course_offer(request):
         selectedsem = semester+' '+year
         table = []
         class6 = []
-        ##print(sections)
+        # print(sections)
         sumsections = sum(sections)
         for i in sections:
             class6.append("{:.2f}".format(i/12))
-        ##print(class6)       
+        # print(class6)
 
         sumcls6 = "{:.2f}".format(sum([float(i) for i in class6]))
 
         class7 = []
         for i in sections:
             class7.append("{:.2f}".format(i/14))
-        ##print(class7)
+        # print(class7)
         sumcls7 = "{:.2f}".format(sum([float(i) for i in class7]))
 
         for i in range(len(lbl)):
@@ -127,7 +132,7 @@ def view_classroom_requirement_course_offer(request):
             col4 = class7[i]
             table.append([col1, col2, col3, col4])
         table.append(['Total', sumsections, sumcls6, sumcls7])
-        #print(class6)
+        # print(class6)
 
         str1 = semester+" "+str(year)
         return render(request, 'classsize.html', {
@@ -139,7 +144,7 @@ def view_classroom_requirement_course_offer(request):
             'seme': str1,
             'table': table,
             'selectedsem': selectedsem,
-            
+
 
             'search': 0,
             'segment': 'cls_req',
@@ -220,7 +225,7 @@ def view_enrolment_course_school(request):
 
         list0.insert(0, list10)
         # table.append([row[0] for row in list0].insert(0,'Total'))#add total to end of the list
-        #print(table)
+        # print(table)
         return render(request, 'enrollmentwise.html', {
             'schools': schoolList,
             'selectedschool': school,
@@ -423,11 +428,11 @@ def view_usage_resource(request):
             total.append(sets)
             total.append(slass)
             total.append(spph)
-        #print(total)
+        # print(total)
         table += total
         table2 = [t2r1]+[t2r2]+[t2r3]+[t2r4]
         total = []
-        #print(table2)
+        # print(table2)
         return render(request, 'resourceusage.html', {
             'semesters': semesterlist,
             'years': yearlist,
@@ -486,19 +491,19 @@ def view_iub_resources(request):
     size.append('free % for 6 slots capacity')
     numbers.append('')
     capacity.append('{:.0%}'.format(
-    	((capacity[-4]-capacity[-2])/capacity[-4])))
+        ((capacity[-4]-capacity[-2])/capacity[-4])))
 
     size.append('free % for 7 slots capacity')
     numbers.append('')
     capacity.append('{:.0%}'.format(
-    	((capacity[-4]-capacity[-2])/capacity[-4])))
+        ((capacity[-4]-capacity[-2])/capacity[-4])))
 
     table = []
     table.append(size)
     table.append(numbers)
     table.append(capacity)
     table = np.transpose(table)
-    #print(table)
+    # print(table)
 
     return render(request, 'availableresources.html', {
         'table': table,
@@ -507,7 +512,7 @@ def view_iub_resources(request):
 
 #####################################################################################################################################
 
-#why i dont know numpy before 😪
+# why i dont know numpy before 😪
 
 
 def view_availabilityvscourse_offer(request):
@@ -597,7 +602,7 @@ def view_availabilityvscourse_offer(request):
                 listEvensize.append(0)
                 c6.append(y)
 
-            #c6.insert(0,sum(c6))
+            # c6.insert(0,sum(c6))
 
             class6offered.append(c6)
             c6 = []
@@ -610,14 +615,14 @@ def view_availabilityvscourse_offer(request):
             g = []
 
         totalroom = listEvensize
-        #totalroom.insert(0,sum(listEvensize))
+        # totalroom.insert(0,sum(listEvensize))
         chartdata = []
         chartlabel = listOddsize
         chartdata += class6offered  # +[totalroom]
-        #print(class6offered)
-        #print(listEvensize)
+        # print(class6offered)
+        # print(listEvensize)
 
-        #table shuru->
+        # table shuru->
         temptable = []
         tablelabel = []
         rowlentemp = len(listOddsize)
@@ -653,7 +658,7 @@ def view_availabilityvscourse_offer(request):
         # # #https://stackoverflow.com/questions/12575421/convert-a-1d-array-to-a-2d-array-in-numpy
         # # differencematrix=np.reshape(difference,(-1, len(semester)))
 
-        ##print(finaltable)
+        # print(finaltable)
 
         return render(request, 'availabilityvscourse.html', {
             'schools': schoolList,
@@ -678,6 +683,7 @@ def view_availabilityvscourse_offer(request):
             'segment': 'usage',
         })
 ####################################################################################################################################
+
 
 def view_revenue_of_iub(request):
     if request.method == 'POST':
@@ -760,7 +766,7 @@ def view_rev_change(request):
         list1 = list(dict.fromkeys(list1))
         total = list2
         list2 = [list2[i:i+3] for i in range(0, len(list2), 3)]
-        #print(total)
+        # print(total)
         for i in list2:
             list3.append(i[0])
             list4.append(i[1])
@@ -808,7 +814,7 @@ def view_rev_change(request):
         # list9=[list6]+[list7]+[list8]
 
         # #print(list1)
-        #print(list2)
+        # print(list2)
         # #print(list9)
 
         return render(request, 'revenuechange.html', {
@@ -839,13 +845,13 @@ def view_revenue_table_of_iub(request):
         yeart = request.POST.get('year2')
         #print(school, yearf, yeart)
         revenue = []
-        rowsize=len(school)
+        rowsize = len(school)
         for i in school:
             revenue.append(iub_revenue(yearf, yeart, i))
         # #print(revenue)
         a = abs(int(yearf)-int(yeart))+1
         # #print(type(a))
-        
+
         list1 = []
         list2 = []
         list3 = []
@@ -857,38 +863,38 @@ def view_revenue_table_of_iub(request):
                 list2.append(int(i[2]))
         list1 = list(dict.fromkeys(list1))
         list2 = [list2[i:i+a*3] for i in range(0, len(list2), a*3)]
-        #add missing spph to make col same for matrix
-        if "SPPH" in school:           
-            index=school.index("SPPH")
+        # add missing spph to make col same for matrix
+        if "SPPH" in school:
+            index = school.index("SPPH")
             dif = len(list1) - len(list2[index])
-            if dif==1:
-                list2[index].insert(1,0)
-            if dif==2:
-                list2[index].insert(1,0)
+            if dif == 1:
+                list2[index].insert(1, 0)
+            if dif == 2:
+                list2[index].insert(1, 0)
                 list2[index].insert(4, 0)
             if dif == 3:
                 list2[index].insert(1, 0)
                 list2[index].insert(4, 0)
                 list2[index].insert(7, 0)
-        list3=np.transpose(list2)
+        list3 = np.transpose(list2)
         total = list3.sum(axis=1).tolist()
-        change=[0,0,0]
+        change = [0, 0, 0]
         for i in range(len(total)-3):
             change.append(int(((total[i+3]-total[i])/total[i+3])*100))
         list2.append(total)
         list2.append(change)
         list2 = np.transpose(list2)
         finaltable = np.c_[list1, list2]
-        #print(finaltable)
+        # print(finaltable)
         return render(request, 'revenuetableiub.html', {
             'schools': schoolList,
             'yearfrom': yearlist,
             'yearto': yearlist,
             'selectedschool': school,
-            'yearf':yearf,
-            'yeart':yeart,
+            'yearf': yearf,
+            'yeart': yeart,
             'table': finaltable,
-            'rowsize':rowsize,
+            'rowsize': rowsize,
             'search': 0,
             'segment': 'rev',
         })
@@ -929,8 +935,8 @@ def view_sets_rev(request):
         list1 = list(dict.fromkeys(list1))
         list2 = [list2[i:i+a*3] for i in range(0, len(list2), a*3)]
 
-        #print(list1)
-        #print(list2)
+        # print(list1)
+        # print(list2)
         return render(request, 'setsrev.html', {
             'dept': SETSdeptList,
             'yearfrom': yearlist,
@@ -987,7 +993,7 @@ def view_deptwise_rev_per(request):
         total = list2
         list2 = [list2[i:i+3] for i in range(0, len(list2), 3)]
 
-        #print(list1)
+        # print(list1)
         for i in list2:
             list3.append(i[0])
             list4.append(i[1])
@@ -1032,7 +1038,7 @@ def view_deptwise_rev_per(request):
             list9.append(list7[j])
             list9.append(list8[j])
 
-        #print(list9)
+        # print(list9)
         return render(request, 'setsdeptper.html', {
             'dept': SETSdeptList,
             'yearfrom': yearlist,
@@ -1065,7 +1071,7 @@ def view_engr_school_rev(request):
         #print(dept, yearf, yeart)
         revenue = []
         for i in dept:
-           revenue.append(SETS_revenue(yearf,yeart,i))
+            revenue.append(SETS_revenue(yearf, yeart, i))
 
         a = abs(int(yearf)-int(yeart))+1
         # #print(type(a))
@@ -1086,25 +1092,25 @@ def view_engr_school_rev(request):
         total = list3.sum(axis=1).tolist()
         change = []
         for i in range(len(list2)):
-            change1 = [0,0,0]
+            change1 = [0, 0, 0]
             for j in range(len(list2[i])-3):
-                change1.append(int(((list2[i][j+3]-list2[i][j])/list2[i][j+3])*100))
+                change1.append(
+                    int(((list2[i][j+3]-list2[i][j])/list2[i][j+3])*100))
             change.append(change1)
-        changet=[0,0,0]
+        changet = [0, 0, 0]
         for i in range(len(total)-3):
-            changet.append(int(((total[i+3]-total[i])/total[i+3])*100))        
+            changet.append(int(((total[i+3]-total[i])/total[i+3])*100))
         change.append(changet)
 
-        finaltemp1=np.transpose(change)
+        finaltemp1 = np.transpose(change)
 
         list2.append(total)
-        finaltemp2=np.transpose(list2)
+        finaltemp2 = np.transpose(list2)
 
-        finaltemp3=np.concatenate((finaltemp2,finaltemp1),axis=1)
-
+        finaltemp3 = np.concatenate((finaltemp2, finaltemp1), axis=1)
 
         finaltable = np.c_[list1, finaltemp3]
-        tablehead=[]
+        tablehead = []
         # for i in range(len(dept)*2+2):
         #     if i<len(dept):
         #         #print(i)
@@ -1125,8 +1131,7 @@ def view_engr_school_rev(request):
             tablehead.append(dept[i]+"%")
         tablehead.append("SETS%")
 
-
-        #print(tablehead)
+        # print(tablehead)
         return render(request, 'setsrevtable.html', {
             'dept': SETSdeptList,
             'yearfrom': yearlist,
@@ -1134,7 +1139,7 @@ def view_engr_school_rev(request):
             'yearf': yearf,
             'yeart': yeart,
             'table': finaltable,
-            'selecteddept':dept,
+            'selecteddept': dept,
             'tablehead': tablehead,
             'search': 0,
             'segment': 'sets',
