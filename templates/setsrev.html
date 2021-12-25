@@ -54,7 +54,8 @@
                 </td>
                 <td class="form-field" style="padding-right:30px;">
                     <label style="padding-right:5px;" for="yearto">Year To</label>
-                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year2" name="year2" form="myform" title="Select Year">
+                    <select style="width:120px;height:30px;" class="form-select selectpicker" id="year2" name="year2"
+                        form="myform" title="Select Year">
                         {% for i in yearto %}
                         {% if i == year2 %}
                         <option value="{{i}}" selected="selected">{{i}}</option>
@@ -81,34 +82,36 @@
             <div class="card-header ">
                 <div class="row">
                     <div class="col-sm-8 text-left">
-                        <h3 class="card-title" id="whatisshowing"><i class="tim-icons icon-chart-pie-36 text-primary"></i></h3>
+                        <h3 class="card-title" id="whatisshowing"><i
+                                class="tim-icons icon-chart-pie-36 text-primary"></i></h3>
                         <span class="label label-success text-center" id="whatisshowing"></span>
                         </label>
                     </div>
-                    
+
                     <div class="col-sm-4">
                         <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                        <label class="btn btn-sm btn-primary btn-simple" id="0">
-                            <input type="radio" class="d-none d-sm-none" name="options">
-                            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Department wise revenue in SETS </span>
-                            <span class="d-block d-sm-none">
-                                <i class="tim-icons icon-gift-2"></i>
-                            </span>
-                        </label>
-                        <label class="btn btn-sm btn-primary btn-simple" id="1">
-                            <input type="radio" class="d-none" name="options">
-                            <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Revenue of SETS</span>
-                            <span class="d-block d-sm-none">
-                                <i class="tim-icons icon-tap-02"></i>
-                            </span>
-                        </label>
-                        
+                            <label class="btn btn-sm btn-primary btn-simple" id="0">
+                                <input type="radio" class="d-none d-sm-none" name="options">
+                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Department wise revenue
+                                    in SETS </span>
+                                <span class="d-block d-sm-none">
+                                    <i class="tim-icons icon-gift-2"></i>
+                                </span>
+                            </label>
+                            <label class="btn btn-sm btn-primary btn-simple" id="1">
+                                <input type="radio" class="d-none" name="options">
+                                <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Revenue of SETS</span>
+                                <span class="d-block d-sm-none">
+                                    <i class="tim-icons icon-tap-02"></i>
+                                </span>
+                            </label>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div class="card-body" style="height:500px;">
-                <div class="chart-area">
+                <div class="chart-area" id="chartContainer">
                     <canvas id="linechart" height="100%"></canvas>
                 </div>
             </div>
@@ -129,125 +132,131 @@
 </script>
 <script>
 
-    var ctx = document.getElementById("linechart").getContext("2d");
+    // var ctx = document.getElementById("linechart").getContext("2d");
     colors = ['#00FFFF', '#A52A2A', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
-    
-    revenue = {{revenue|safe}}
-    revenuelabel={{revenuesemyear|safe}}
-    selecteddept={{selecteddept|safe}}
 
-    
+    revenue = {{ revenue | safe }}
+    revenuelabel = {{ revenuesemyear | safe }}
+    selecteddept = {{ selecteddept | safe }}
 
-    
+
+    // https://stackoverflow.com/questions/24815851/how-to-clear-a-chart-from-a-canvas-so-that-hover-events-cannot-be-triggered
+    // ans by: Eric
+
     $("#0").click(function () {
+        document.getElementById("chartContainer").innerHTML = '&nbsp;';
+        document.getElementById("chartContainer").innerHTML = '<canvas id="linechart" height="100%"></canvas>';
+        var ctx = document.getElementById("linechart").getContext("2d");
         document.getElementById('whatisshowing').innerHTML = 'Department wise revenue in SETS';
-        var chatdata=[]
-        for(var i=0;i<selecteddept.length;i++){
-        var originaldata = {
-            type:'line',
-            fill: false,
-            label: selecteddept[i],
-            data: revenue[i],
-            backgroundColor: colors[i],
-            borderColor: colors[i],
-            lineTension: 0,
-        
-    };
-    chatdata.push(originaldata);
-    }
+        var chatdata = []
+        for (var i = 0; i < selecteddept.length; i++) {
+            var originaldata = {
+                type: 'line',
+                fill: false,
+                label: selecteddept[i],
+                data: revenue[i],
+                backgroundColor: colors[i],
+                borderColor: colors[i],
+                lineTension: 0,
 
-    var data = {
-            labels: revenuelabel,
-			datasets : chatdata
-            
-		};
-        var myChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-            scaleShowValues: true,
-            title: {
-                display: true
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        autoSkip: false
-                    },
-                    type: 'linear',
-                }],
-                xAxes: [{
-                    ticks: {
-                        autoSkip: false
-                    },
-                }],
-            },
-            responsive: true,
-            maintainAspectRatio: true
+            };
+            chatdata.push(originaldata);
         }
+
+        var data = {
+            labels: revenuelabel,
+            datasets: chatdata
+
+        };
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                scaleShowValues: true,
+                title: {
+                    display: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            autoSkip: false
+                        },
+                        type: 'linear',
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false
+                        },
+                    }],
+                },
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+
     });
 
-        });
-    
     $("#1").click(function () {
+        document.getElementById("chartContainer").innerHTML = '&nbsp;';
+        document.getElementById("chartContainer").innerHTML = '<canvas id="linechart" height="100%"></canvas>';
+        var ctx = document.getElementById("linechart").getContext("2d");
         document.getElementById('whatisshowing').innerHTML = 'Revenue of SETS';
-        var chatdata=[]
-        for(var i=0;i<selecteddept.length;i++){
-        var originaldata = {
-            type:'line',
-            fill: true,
-            label: selecteddept[i],
-            data: revenue[i],
-            backgroundColor: colors[i],
-            borderColor: colors[i],
-            lineTension: 0,
-        
-    };
-    chatdata.push(originaldata);
-    }
+        var chatdata = []
+        for (var i = 0; i < selecteddept.length; i++) {
+            var originaldata = {
+                type: 'line',
+                fill: true,
+                label: selecteddept[i],
+                data: revenue[i],
+                backgroundColor: colors[i],
+                borderColor: colors[i],
+                lineTension: 0,
 
-    var data = {
-            labels: revenuelabel,
-			datasets : chatdata
-            
-		};
-        var myChart = new Chart(ctx, {
-        type: 'line',
-        data: data,
-        options: {
-            title: {
-                display: true
-            },
-            tooltip: {
-            mode: 'index'
-            },
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                    type: 'linear',
-                    stacked: true
-                }],
-                xAxes: [{
-                    ticks: {
-                        autoSkip: false
-                    },
-                }],
-            },
-    
-            responsive: true,
-            maintainAspectRatio: true
+            };
+            chatdata.push(originaldata);
         }
+
+        var data = {
+            labels: revenuelabel,
+            datasets: chatdata
+
+        };
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                title: {
+                    display: true
+                },
+                tooltip: {
+                    mode: 'index'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                        type: 'linear',
+                        stacked: true
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false
+                        },
+                    }],
+                },
+
+                responsive: true,
+                maintainAspectRatio: true
+            }
+        });
+
     });
 
-        });
-    
 
 </script>
 
 
 
 {% endblock javascripts %}
-

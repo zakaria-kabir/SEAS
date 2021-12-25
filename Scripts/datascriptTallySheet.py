@@ -16,10 +16,10 @@ from seasapp.models import *
 def populatedata(filename):
     # Reading data from excel
     tempfile = filename[0: filename.index(".")]
-    print(filename)
+    #print(filename)
     sem=tempfile.rsplit('_', 2)[1]
     year = tempfile.rsplit('_', 2)[2]
-    print(sem,year)
+    #print(sem,year)
     df = pd.read_excel(filename, skiprows=3)
     df = df.iloc[:-1]
     df['Semester'] = sem
