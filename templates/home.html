@@ -35,8 +35,9 @@
                     institutional bodies to retrieve statistical data on school-level revenue analysis,
                     classroom requirement analysis based on class slot, classroom allocation
                     recommendations based on IUB best resource utilization, and IUB resource
-                    analysis.
+                    analysis. 
                 </p>
+                <hr style="margin: 0; background-color: rgb(255, 0, 221);">
                 <p class="dashtext2">
                     Click the "upload file" to upload new file. Please upload file in </p>
                     <p class="dashtext3" > "Tally Sheet For Semestername Year.xlsx"</p>
@@ -109,11 +110,11 @@
 
                         function clicked(e) {
                             
-                                if (!confirm('Are you sure?')) {
+                                if (!confirm('Are you sure? (some existing data may got affected)')) {
                                     e.preventDefault();
                                 }
                                 else{
-                                    $("label").text("please wait until the current process is finished");
+                                    $("#label").text("please wait until the current process is finished");
                                 }
                           
                                 

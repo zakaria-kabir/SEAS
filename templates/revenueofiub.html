@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="card-body" style="height:500px;">
-                <div class="chart-area">
+                <div class="chart-area" id="chartContainer">
                     <canvas id="linechart" height="100%"></canvas>
                 </div>
             </div>
@@ -129,7 +129,7 @@
 </script>
 <script>
 
-    var ctx = document.getElementById("linechart").getContext("2d");
+    // var ctx = document.getElementById("linechart").getContext("2d");
     colors = ['#00FFFF', '#A52A2A', '#7FFF00', '#5F9EA0', '#6495ED', '#A9A9A9', '#FF69B4', '#0000FF', '#006D77']
     
     revenue = {{revenue|safe}}
@@ -138,8 +138,12 @@
 
     
 
-    
+    // https://stackoverflow.com/questions/24815851/how-to-clear-a-chart-from-a-canvas-so-that-hover-events-cannot-be-triggered
+    // ans by: Eric
     $("#0").click(function () {
+        document.getElementById("chartContainer").innerHTML = '&nbsp;';
+        document.getElementById("chartContainer").innerHTML = '<canvas id="linechart" height="100%"></canvas>';
+        var ctx = document.getElementById("linechart").getContext("2d");
         document.getElementById('whatisshowing').innerHTML = 'Revenue Trend of the schools';
         var chatdata=[]
         for(var i=0;i<selectedschool.length;i++){
@@ -190,6 +194,9 @@
         });
     
     $("#1").click(function () {
+        document.getElementById("chartContainer").innerHTML = '&nbsp;';
+        document.getElementById("chartContainer").innerHTML = '<canvas id="linechart" height="100%"></canvas>';
+        var ctx = document.getElementById("linechart").getContext("2d");
         document.getElementById('whatisshowing').innerHTML = 'Revenue Distribution among the schools';
         var chatdata=[]
         for(var i=0;i<selectedschool.length;i++){

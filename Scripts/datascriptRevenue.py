@@ -12,7 +12,7 @@ from seasapp.models import *
 
 def populate(filename,sheet_name):
     # Reading data from excel
-    print(filename)
+    #print(filename)
     df = pd.read_excel(filename, sheet_name=sheet_name)
 
 # Department_T

@@ -201,11 +201,10 @@ def resources_usage(School, Sem, Year):
 def details_enrollment(School, Sem, Year):
     with connection.cursor() as cursor:
         cursor.execute('''
-        SELECT SectionEnrolled, COUNT(*) AS SBE
+        SELECT SectionEnrolled, COUNT(*) AS school
         FROM joinedtable 
         WHERE SchoolTitle_id="{}" AND Semester="{}" AND Year = {} AND SectionEnrolled BETWEEN 1 AND 100 
         GROUP BY SectionEnrolled
-        HAVING SectionEnrolled > 0
         ORDER BY SectionEnrolled ASC;
         '''.format(School, Sem, Year))
 
