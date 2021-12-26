@@ -7,6 +7,18 @@ analysis, classroom requirement analysis based on class slot, classroom
 allocation recommendations based on IUB best resource utilization, and IUB
 resource calculation.
 
+### Sample screen snap:
+![Screenshot 2021-12-26 112106](https://user-images.githubusercontent.com/91650627/147399684-e550c739-0f74-48f8-a98b-7b001f812ad1.jpg)
+
+![Screenshot 2021-12-26 112150](https://user-images.githubusercontent.com/91650627/147399687-3a80854a-a9df-4a92-b750-3ba066301ed8.jpg)
+
+![Screenshot 2021-12-26 112224](https://user-images.githubusercontent.com/91650627/147399689-c0590e55-7837-4cdc-8e83-805198153f05.jpg)
+
+![Screenshot 2021-12-26 112249](https://user-images.githubusercontent.com/91650627/147399690-bec6a7c2-6a56-4afb-a729-341c78004dab.jpg)
+
+
+
+
 ### Steps to start working:
 
 ## Dependencies
